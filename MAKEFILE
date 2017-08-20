@@ -1,0 +1,3 @@
+foo:
+	cl /EHsc main.cpp startup.cpp
+	del *.obj

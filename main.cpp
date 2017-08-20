@@ -1,6 +1,7 @@
 #include "som_def.h"
 
-int main(){
+int main()
+{
   parameter p;
   p.depth = 5;
   p.map_x = 10;
