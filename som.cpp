@@ -5,12 +5,15 @@
 
 using namespace std;
 
-Som::Som(unsigned long x, unsigned long y, unsigned long z)
+Som::Som(unsigned long x, unsigned long y, unsigned long z) : alpha(7),
+                                                              iteration_max(5000),
+                                                              neighbor_start(2)
 {
   this->map_x = x;
   this->map_y = y;
   this->map_z = z;
   this->init();
+  cout << "init rdy" << endl;
 }
 
 Som *Som::init()
@@ -28,7 +31,7 @@ Som *Som::init()
       for (size_t w = 0; w < this->map_z; ++w)
       {
         this->map[row][col][this->map_z] = dist(mt);
-        cout << this->map[row][col][this->map_z] << " ";
+        //cout << this->map[row][col][this->map_z] << " ";
       }
       cout << endl;
     }
