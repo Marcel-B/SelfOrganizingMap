@@ -4,23 +4,16 @@ using namespace std;
 
 int main()
 {
-  // parameter p;
-  // p.depth = 5;
-  // p.map_x = 10;
-  // p.map_y = 30;
-
-  // init_networt(p);
-  auto som = new Som(5, 7, 3);
+  auto som = new Som(55, 99, 3);
   cout << "Init ready" << endl;
   for (size_t it = 0; it < 50; ++it)
-    cout << som->learning_linear(it + 1) << endl;
+    som->learning_linear(static_cast<unsigned long>(it) + 1);
   for (size_t it = 0; it < 50; ++it)
-    cout << som->learning_inverse_of_time(it + 1) << endl;
+    som->learning_inverse_of_time(static_cast<unsigned long>(it) + 1);
   for (size_t it = 0; it < 50; ++it)
-    cout << som->learing_power_series(it + 1) << endl;
+    som->learing_power_series(static_cast<unsigned long>(it) + 1);
   for (size_t i = 0; i < 3000; ++i)
-    cout << som->neighbor_radius(i + 1) << endl;
+    som->neighbor_radius(static_cast<unsigned long>(i) + 1);
   delete som;
-
   return 0;
 }
