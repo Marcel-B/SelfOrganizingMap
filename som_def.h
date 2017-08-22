@@ -12,13 +12,19 @@ struct parameter
 {
   unsigned long map_x;
   unsigned long map_y;
-  unsigned long depth;
+  unsigned long map_z;
+  unsigned long max_iterations; 
 };
 class Som
 {
 public:
+<<<<<<< HEAD
   Som() : map_x(0), map_y(0), map_z(0), alpha(7), iteration_max(5000), neighbor_start(0) {}
   Som(unsigned long x, unsigned long y, unsigned long z);
+=======
+  Som() : map_x(0), map_y(0), map_z(0), map_rdy(false), max_itreations(0) {}
+  Som(unsigned long x, unsigned long y, unsigned long z, unsigned long cnt);
+>>>>>>> oo
   ~Som();
   Som *get_bmu(double *input)
   {
@@ -94,9 +100,13 @@ public:
 
 private:
   double ***map;
+  double **beta;
+  double *alpha;
+  bool map_rdy;
   unsigned long map_x;
   unsigned long map_y;
   unsigned long map_z;
+<<<<<<< HEAD
   unsigned long iteration_max;
   unsigned long train_data_size;
   unsigned short neighbor_start;
@@ -105,6 +115,12 @@ private:
   double **train_data;
 
   Som *init();
+=======
+  unsigned long max_itreations;
+  Som *init_map();
+  Som *init_beta();
+  Som *init_alpha();
+>>>>>>> oo
 }; // Som
 
 struct map

@@ -5,18 +5,28 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 Som::Som(unsigned long x, unsigned long y, unsigned long z) : alpha(7),
                                                               iteration_max(5000),
                                                               neighbor_start(2)
+=======
+Som::Som(unsigned long x, unsigned long y, unsigned long z, unsigned long max_iterations)
+>>>>>>> oo
 {
   this->map_x = x;
   this->map_y = y;
   this->map_z = z;
+  this->max_iterations = max_iteration;
   this->init();
   cout << "init rdy" << endl;
 }
+Som *Som::init_alpha()
+{
+  this->
+  return this;
+}
 
-Som *Som::init()
+Som *Som::init_map()
 {
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -38,11 +48,15 @@ Som *Som::init()
       }
     }
   }
+<<<<<<< HEAD
   catch (...)
   {
     cout << "Malloc error" << endl;
   }
   cout << "Zwei" << endl;
+=======
+  this->map_rdy = true;
+>>>>>>> oo
   return this;
 }
 
