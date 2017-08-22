@@ -12,6 +12,7 @@ Som::Som(unsigned long x, unsigned long y, unsigned long z) : alpha(7),
   this->map_x = x;
   this->map_y = y;
   this->map_z = z;
+  init_map();
   cout << "init rdy" << endl;
 }
 
