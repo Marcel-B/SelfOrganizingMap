@@ -2,8 +2,10 @@
 #include <iostream>
 using namespace std;
 
+
 int main()
 {
+  foo_bar("copy.csv");
   auto som = new Som(55, 99, 3);
   cout << "Init ready" << endl;
   for (size_t it = 0; it < 50; ++it)

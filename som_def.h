@@ -1,6 +1,20 @@
+#pragma once
 #include <math.h>
 #include <limits>
+#include <string>
+#include <vector>
+
 using namespace std;
+
+struct Merkmal
+{
+  string name;
+  double max;
+  double min;
+};
+void foo_bar(const char *source);
+void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &header);
+vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
 
 struct Point
 {
