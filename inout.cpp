@@ -41,7 +41,7 @@ vector<double> scale_values(const vector<double> &in_column_vector)
   return scaled;
 }
 
-void foo_bar(const char *source)
+void foo_bar(const char *source, vector<vector<double>> &out_scaled_data)
 {
   string line;
   ifstream fs;
@@ -55,11 +55,8 @@ void foo_bar(const char *source)
 
   vector<vector<double>> values;
   vector<string> header;
-  parse_lines(lines, values, header);
-  auto merkmale = get_merkmal(values, header);
-  // cout.precision(5);
-  // cout.width(8);
-  // cout.fill('.');
+  parse_lines(lines, out_scaled_data, header);
+  auto merkmale = get_merkmal(out_scaled_data, header);
   cout << setw(10) << left << "Name" << right << setw(10) << "min" << setw(10) << "max" << endl;
   for (size_t i = 0; i < merkmale.size(); ++i)
     cout << setw(10) << left << merkmale[i].name << right << setw(10) << setprecision(5) << fixed << merkmale[i].min << setw(10) << merkmale[i].max << endl;
@@ -68,17 +65,17 @@ void foo_bar(const char *source)
   for (size_t i = 0; i < header.size(); ++i)
   {
     tmp_col.clear();
-    for (size_t row = 0; row < values.size(); ++row)
+    for (size_t row = 0; row < out_scaled_data.size(); ++row)
     {
-      tmp_col.push_back(values[row][i]);
+      tmp_col.push_back(out_scaled_data[row][i]);
     }
     // Spalte skalieren
     auto column = scale_values(tmp_col);
 
     // Skalierten Werte zurückschreiben
-    for (size_t row = 0; row < values.size(); ++row)
+    for (size_t row = 0; row < out_scaled_data.size(); ++row)
     {
-      values[row][i] = column[row];
+      out_scaled_data[row][i] = column[row];
     }
     // for (size_t n = 0; n < column.size(); ++n)
     //   cout << values[n][i] << endl;
@@ -110,7 +107,7 @@ void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_val
   int idx = 0;
   do
   {
-    idx = header_row.find(SEP);
+    idx = static_cast<int>(header_row.find(SEP));
     if (idx < 0)
     {
       out_header.push_back(header_row);
@@ -121,8 +118,6 @@ void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_val
       header_row = header_row.substr(idx + 1);
     }
   } while (idx >= 0);
-  for (size_t i = 0; i < out_header.size(); ++i)
-    cout << out_header[i] << endl;
 
   for (size_t i = 1; i < in_lines.size(); ++i)
   {
@@ -130,7 +125,7 @@ void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_val
     current_row = in_lines[i];
     do
     {
-      idx = current_row.find(SEP);
+      idx = static_cast<int>(current_row.find(SEP));
       if (idx < 0)
       {
         row.push_back(stod(current_row));

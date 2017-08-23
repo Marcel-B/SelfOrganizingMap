@@ -12,22 +12,14 @@ struct Merkmal
   double max;
   double min;
 };
-void foo_bar(const char *source);
+void foo_bar(const char *source, vector<vector<double>> &out_scaled_data);
 void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &header);
 vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
-
 struct Point
 {
   unsigned long x;
   unsigned long y;
   double dist;
-};
-struct parameter
-{
-  unsigned long map_x;
-  unsigned long map_y;
-  unsigned long map_z;
-  unsigned long max_iterations;
 };
 class Som
 {
@@ -35,30 +27,9 @@ public:
   Som() : map_x(0), map_y(0), map_z(0), alpha(7), iteration_max(5000), neighbor_start(0) {}
   Som(unsigned long x, unsigned long y, unsigned long z);
   ~Som();
-  Som *get_bmu(double *input)
-  {
-    this->bmu.dist = numeric_limits<double>::max();
-    for (size_t row = 0; row < this->map_y; ++row)
-    {
-      for (size_t col = 0; col < this->map_x; ++col)
-      {
-        double tmp = get_distance(input, this->map[col][row]);
-        if (tmp < this->bmu.dist)
-        {
-          this->bmu.dist = tmp;
-          this->bmu.x = static_cast<unsigned long>(col);
-          this->bmu.y = static_cast<unsigned long>(row);
-        }
-      }
-    }
-    this->bmu.dist = sqrt(this->bmu.dist);
-    return this;
-  }
-  Som *set_train_data(const double **in_train_data, unsigned long size);
-  double learning_linear(unsigned long iteration)
-  {
-    return this->alpha * 1.0 / static_cast<double>(iteration);
-  }
+
+  Som *set_train_data(const vector<vector<double>> &in_train_data);
+
   double learning_inverse_of_time(unsigned long iteration)
   {
     return this->alpha * (1.0 - static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
@@ -68,11 +39,6 @@ public:
     return this->alpha * exp(static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
   }
 
-  // Gibt den derzeitigen Radius zurück (bezogen auf die Iteration)
-  double neighbor_radius(unsigned long iteration)
-  {
-    return static_cast<unsigned short>(static_cast<double>(this->neighbor_start) * exp(-(static_cast<double>(iteration) / static_cast<double>(this->iteration_max))));
-  }
   double *get_bmu_vector()
   {
     return this->map[this->bmu.x][this->bmu.y];
@@ -82,7 +48,7 @@ public:
   double learning_neighbor(unsigned long iteration, double *weight)
   {
     // Nenner berechnen
-    double tmp = 2.0 * (neighbor_radius(iteration) * neighbor_radius(iteration));
+    double tmp = 2.0 * (neighbor_radius[iteration] * neighbor_radius[iteration]);
     double distance = sqrt(get_distance(this->get_bmu_vector(), weight));
     distance = distance * distance * -1.0;
     tmp = distance / tmp;
@@ -106,7 +72,7 @@ public:
     }
     return this;
   }
-  Som *Som::init_map();
+  Som *init();
 
 private:
   double ***map;
@@ -114,20 +80,19 @@ private:
   unsigned long map_x;
   unsigned long map_y;
   unsigned long map_z;
-  unsigned long iteration_max;
-  unsigned long train_data_size;
+  size_t iteration_max;
+  size_t train_data_size;
   unsigned short neighbor_start;
   Point bmu;
   double alpha;
+  double *alpha_values;
   double **train_data;
+  unsigned short* neighbor_radius;
 
-  Som *init();
+  Som *get_bmu(double *input);
+  Som *Som::init_map();
+  Som *Som::init_alpha_values();
+  Som *Som::init_radius();
+  double learning_linear(const size_t  &iteration);
+  unsigned short get_neighbor_radius(const size_t &iteration);
 }; // Som
-
-struct map
-{
-  // y - x - z
-  double ***weights;
-};
-void kill_memory(const parameter &para, map *som);
-void init_networt(const parameter &parameter);
