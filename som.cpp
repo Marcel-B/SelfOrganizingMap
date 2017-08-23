@@ -29,6 +29,18 @@ Som *Som::init_radius()
   cout << "Neighbor radius ready" << endl;
   return this;
 }
+double *Som::get_neighbor(const size_t &in_iteration)
+{
+  size_t x = this->bmu.x;
+  size_t y = this->bmu.y;
+  unsigned short radius = this->neighbor_radius[in_iteration];
+  size_t x_start = x - radius;
+  size_t x_end = x + radius;
+  size_t y_start = y - radius;
+  size_t y_end = y + radius;
+  return this->map[0][0];
+}
+
 Som *Som::init_map()
 {
   std::random_device rd;
@@ -99,31 +111,55 @@ Som *Som::set_train_data(const vector<vector<double>> &in_train_data)
       this->train_data[i][w] = in_train_data[i][w];
     }
   }
-  cout << "Input Data ready" << endl;
+  cout << "Input Data ready - " << this->train_data_size << " Datasets" << endl;
   return this;
 }
-Som *Som::get_bmu(double *input)
+Som *Som::get_bmu(const double *input)
 {
+  //cout << "get_bmu called" << endl;
   this->bmu.dist = numeric_limits<double>::max();
   for (size_t row = 0; row < this->map_y; ++row)
   {
     for (size_t col = 0; col < this->map_x; ++col)
     {
-      double tmp = get_distance(input, this->map[col][row]);
+      double tmp = get_distance(input, this->map[row][col]);
       if (tmp < this->bmu.dist)
       {
+        // cout << "HIT [" << row << "][" << col << "]" << endl;
         this->bmu.dist = tmp;
         this->bmu.x = static_cast<unsigned long>(col);
         this->bmu.y = static_cast<unsigned long>(row);
       }
     }
   }
+  // cout << "Maybe find Bmu" << endl;
   this->bmu.dist = sqrt(this->bmu.dist);
   return this;
+}
+double Som::get_distance(const double *train_vector, double *weight)
+{
+  auto result = .0;
+  for (size_t i = 0; i < this->map_z; ++i)
+  {
+    result += ((train_vector[i] - weight[i]) * (train_vector[i] - weight[i]));
+  }
+  return result;
 }
 double Som::learning_linear(const size_t &iteration)
 {
   return this->alpha * 1.0 / static_cast<double>(iteration);
+}
+double Som::learning_neighbor(const size_t &in_iteration, double *weight)
+{
+  // Nenner berechnen
+  double tmp = 2.0 * (neighbor_radius[in_iteration] * neighbor_radius[in_iteration]);
+  if (tmp == 0)
+    cout << "ERROR" << endl;
+  double distance = sqrt(get_distance(this->get_bmu_vector(), weight));
+  distance = distance * distance * -1.0;
+  tmp = distance / tmp;
+  tmp = learning_linear(in_iteration) * exp(tmp);
+  return tmp;
 }
 Som *Som::init_alpha_values()
 {
@@ -131,5 +167,45 @@ Som *Som::init_alpha_values()
   for (size_t iteration = 0; iteration < this->iteration_max; ++iteration)
     this->alpha_values[iteration] = learning_linear(iteration);
   cout << "Alpha values ready" << endl;
+  return this;
+}
+Som *Som::train_bmu(unsigned long iteration, double *input, double *weight)
+{
+  for (size_t w = 0; w < this->map_z; ++w)
+  {
+    weight[w] = weight[w] + alpha_values[iteration] * (input[w] - weight[w]);
+  }
+  return this;
+}
+
+Som *Som::start_training()
+{
+  cout << "start_training called" << endl;
+  cout << this->train_data_size << endl;
+  cout << this->iteration_max << endl;
+  cout << this->map_z << endl;
+  try
+  {
+    for (size_t c_iteration = 0; c_iteration < this->iteration_max; ++c_iteration)
+    {
+      cout << "IT: " << c_iteration << endl;
+      for (size_t t = 0; t < this->train_data_size; ++t)
+      // for (size_t t = 0; t <10; ++t)
+      {
+        get_bmu(this->train_data[t]);
+        // cout << this->map[this->bmu.x][this->bmu.y][0] << endl;
+        train_bmu(c_iteration, this->train_data[t], get_bmu_vector());
+        // cout << this->map[this->bmu.x][this->bmu.y][0] << endl << endl;
+        //cout << "H" << t << endl;
+      }
+    }
+  }
+  catch (...)
+  {
+    cout << "Shit happens" << endl;
+  }
+  cout << this->bmu.x << endl;
+  cout << this->bmu.y << endl;
+  cout << this->bmu.dist << endl;
   return this;
 }

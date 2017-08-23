@@ -4,7 +4,7 @@
 #include <vector>
 #include <limits>
 #include <iomanip>
-
+#include "inout.h"
 #include "som_def.h"
 
 #define SEP ','
@@ -12,7 +12,7 @@
 using namespace std;
 
 // a = unterer Zielwert, b = oberer Zielwert
-double scale_value(double x, double min, double max, double a, double b)
+double In_Out::scale_value(double x, double min, double max, double a, double b)
 {
   if (max - min == 0)
     return a;
@@ -34,7 +34,7 @@ vector<double> scale_values(const vector<double> &in_column_vector)
   range = max - min;
   if (range > 0)
     for (size_t i = 0; i < in_column_vector.size(); ++i)
-      scaled[i] = scale_value(in_column_vector[i], min, max, 0.01, 0.99);
+      scaled[i] = In_Out::scale_value(in_column_vector[i], min, max, 0.01, 0.99);
   else // Konstante
     for (size_t i = 0; i < in_column_vector.size(); ++i)
       scaled[i] = 0.05;
@@ -77,8 +77,6 @@ void foo_bar(const char *source, vector<vector<double>> &out_scaled_data)
     {
       out_scaled_data[row][i] = column[row];
     }
-    // for (size_t n = 0; n < column.size(); ++n)
-    //   cout << values[n][i] << endl;
   }
 }
 vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header)

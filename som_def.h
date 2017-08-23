@@ -3,6 +3,7 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -29,6 +30,7 @@ public:
   ~Som();
 
   Som *set_train_data(const vector<vector<double>> &in_train_data);
+  Som *start_training();
 
   double learning_inverse_of_time(unsigned long iteration)
   {
@@ -45,40 +47,14 @@ public:
   }
   // http://www.cis.hut.fi/somtoolbox/documentation/somalg.shtml
   // http://www.saedsayad.com/clustering_som.htm
-  double learning_neighbor(unsigned long iteration, double *weight)
-  {
-    // Nenner berechnen
-    double tmp = 2.0 * (neighbor_radius[iteration] * neighbor_radius[iteration]);
-    double distance = sqrt(get_distance(this->get_bmu_vector(), weight));
-    distance = distance * distance * -1.0;
-    tmp = distance / tmp;
-    tmp = learning_linear(iteration) * exp(tmp);
-    return tmp;
-  }
-  double get_distance(double *train_vector, double *weight)
-  {
-    auto result = .0;
-    for (size_t i = 0; i < this->map_z; ++i)
-    {
-      result += ((train_vector[i] - weight[i]) * (train_vector[i] - weight[i]));
-    }
-    return result;
-  }
-  Som *train_bmu(unsigned long iteration, double *input, double *weight)
-  {
-    for (size_t w = 0; w < this->map_z; ++w)
-    {
-      weight[w] = weight[w] + learning_linear(iteration) * (input[w] - weight[w]);
-    }
-    return this;
-  }
+
   Som *init();
 
 private:
   double ***map;
   bool map_rdy;
-  unsigned long map_x;
-  unsigned long map_y;
+  size_t map_x;
+  size_t map_y;
   unsigned long map_z;
   size_t iteration_max;
   size_t train_data_size;
@@ -87,12 +63,16 @@ private:
   double alpha;
   double *alpha_values;
   double **train_data;
-  unsigned short* neighbor_radius;
+  unsigned short *neighbor_radius;
 
-  Som *get_bmu(double *input);
-  Som *Som::init_map();
-  Som *Som::init_alpha_values();
-  Som *Som::init_radius();
-  double learning_linear(const size_t  &iteration);
+  Som *get_bmu(const double *input);
+  Som *init_map();
+  Som *init_alpha_values();
+  Som *init_radius();
+  double *get_neighbor(const size_t &in_iteration);
+  double get_distance(const double *train_vector, double *weight);
+  double learning_neighbor(const size_t &in_iteration, double *weight);
+  Som *train_bmu(unsigned long iteration, double *input, double *weight);
+  double learning_linear(const size_t &iteration);
   unsigned short get_neighbor_radius(const size_t &iteration);
 }; // Som
