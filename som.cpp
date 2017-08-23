@@ -16,7 +16,6 @@ Som::Som(unsigned long x, unsigned long y, unsigned long z) : alpha(7),
   cout << "init rdy" << endl;
 }
 
-
 Som *Som::init_map()
 {
   std::random_device rd;
@@ -58,14 +57,16 @@ Som::~Som()
     }
     delete[] this->map[row];
   }
+  cout << "Map" << endl;
   delete[] this->map;
-
+  cout << "Map2" << endl;
   for (size_t i = 0; i < this->train_data_size; ++i)
   {
     delete[] this->train_data[i];
   }
+  cout << "train" << endl;
   delete[] this->train_data;
-
+  cout << "train2" << endl;
   cout << "Deleted " << this << endl;
 }
 
