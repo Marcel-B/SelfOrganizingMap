@@ -1,11 +1,12 @@
 #include "som_def.h"
+#include "inout.h"
 #include <iostream>
 using namespace std;
 
 int main()
 {
   vector<vector<double>> scaled_data;
-  foo_bar("copy.csv", scaled_data);
+  In_Out::import_data("copy.csv", scaled_data);
   size_t num_u = scaled_data[0].size();
   cout << num_u << endl;
   auto som = new Som(500, 590, num_u);

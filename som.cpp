@@ -6,7 +6,7 @@
 using namespace std;
 
 Som::Som(unsigned long x, unsigned long y, unsigned long z) : alpha(7),
-                                                              iteration_max(5000),
+                                                              iteration_max(50),
                                                               neighbor_start(2)
 {
   this->map_x = x;
@@ -47,25 +47,20 @@ Som *Som::init_map()
   std::mt19937 mt(rd());
   std::uniform_real_distribution<double> dist(0.0, 1.0);
   this->map = static_cast<double ***>(malloc(sizeof(double **) * this->map_y));
-  try
+  for (size_t row = 0; row < this->map_y; ++row)
   {
-    for (size_t row = 0; row < this->map_y; ++row)
+    this->map[row] = static_cast<double **>(malloc(sizeof(double *) * this->map_x));
+    for (size_t col = 0; col < this->map_x; ++col)
     {
-      this->map[row] = static_cast<double **>(malloc(sizeof(double *) * this->map_x));
-      for (size_t col = 0; col < this->map_x; ++col)
+      this->map[row][col] = static_cast<double *>(malloc(sizeof(double) * this->map_z));
+      for (size_t w = 0; w < this->map_z; ++w)
       {
-        this->map[row][col] = static_cast<double *>(malloc(sizeof(double) * this->map_z));
-        for (size_t w = 0; w < this->map_z; ++w)
-        {
-          this->map[row][col][w] = dist(mt);
-        }
+        this->map[row][col][w] = dist(mt);
       }
     }
   }
-  catch (...)
-  {
-    cout << "Malloc error" << endl;
-  }
+
+  this->tmp = static_cast<double *>(malloc(sizeof(double) * this->map_z));
   cout << "Map ready" << endl;
   return this;
 }
@@ -95,6 +90,10 @@ Som::~Som()
 
   delete[] this->neighbor_radius;
   cout << "Neighbor radius deleted" << endl;
+
+  delete[] this->tmp;
+  cout << "Temp vector deleted" << endl;
+
   cout << "Som deallocate process finished (" << this << ")" << endl;
 }
 
@@ -114,53 +113,39 @@ Som *Som::set_train_data(const vector<vector<double>> &in_train_data)
   cout << "Input Data ready - " << this->train_data_size << " Datasets" << endl;
   return this;
 }
-Som *Som::get_bmu(const double *input)
+
+Point Som::get_bmu(const double *input)
 {
-  //cout << "get_bmu called" << endl;
   this->bmu.dist = numeric_limits<double>::max();
   for (size_t row = 0; row < this->map_y; ++row)
   {
     for (size_t col = 0; col < this->map_x; ++col)
     {
-      double tmp = get_distance(input, this->map[row][col]);
+      double tmp = get_distance(input, this->map[row][col], this->map_z);
       if (tmp < this->bmu.dist)
       {
-        // cout << "HIT [" << row << "][" << col << "]" << endl;
         this->bmu.dist = tmp;
         this->bmu.x = static_cast<unsigned long>(col);
         this->bmu.y = static_cast<unsigned long>(row);
       }
     }
   }
-  // cout << "Maybe find Bmu" << endl;
   this->bmu.dist = sqrt(this->bmu.dist);
-  return this;
+  return this->bmu;
 }
-double Som::get_distance(const double *train_vector, double *weight)
+
+double Som::get_distance(const double *v, const double *w, const size_t &n)
 {
   auto result = .0;
-  for (size_t i = 0; i < this->map_z; ++i)
-  {
-    result += ((train_vector[i] - weight[i]) * (train_vector[i] - weight[i]));
-  }
+  for (size_t i = 0; i < n; ++i)
+    result += ((v[i] - w[i]) * (v[i] - w[i]));
   return result;
 }
 double Som::learning_linear(const size_t &iteration)
 {
   return this->alpha * 1.0 / static_cast<double>(iteration);
 }
-double Som::learning_neighbor(const size_t &in_iteration, double *weight)
-{
-  // Nenner berechnen
-  double tmp = 2.0 * (neighbor_radius[in_iteration] * neighbor_radius[in_iteration]);
-  if (tmp == 0)
-    cout << "ERROR" << endl;
-  double distance = sqrt(get_distance(this->get_bmu_vector(), weight));
-  distance = distance * distance * -1.0;
-  tmp = distance / tmp;
-  tmp = learning_linear(in_iteration) * exp(tmp);
-  return tmp;
-}
+
 Som *Som::init_alpha_values()
 {
   this->alpha_values = static_cast<double *>(malloc(sizeof(double) * this->iteration_max));
@@ -177,7 +162,23 @@ Som *Som::train_bmu(unsigned long iteration, double *input, double *weight)
   }
   return this;
 }
-
+vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu)
+{
+  auto radius = this->neighbor_radius[iteration];
+  size_t x = bmu.x;
+  size_t y = bmu.y;
+  vector<Point> idx;
+  idx.resize(radius * 4 + radius * radius * 4);
+  for(size_t i = 1; i <= radius; ++i){
+    Point tmp;
+    tmp.x 
+  }
+  // = r * 4 + r^2 * 4
+  // 1 = 8
+  // 2 = 24
+  // 3 = 48
+  // 4 = 80
+}
 Som *Som::start_training()
 {
   cout << "start_training called" << endl;
@@ -192,11 +193,12 @@ Som *Som::start_training()
       for (size_t t = 0; t < this->train_data_size; ++t)
       // for (size_t t = 0; t <10; ++t)
       {
-        get_bmu(this->train_data[t]);
-        // cout << this->map[this->bmu.x][this->bmu.y][0] << endl;
-        train_bmu(c_iteration, this->train_data[t], get_bmu_vector());
-        // cout << this->map[this->bmu.x][this->bmu.y][0] << endl << endl;
-        //cout << "H" << t << endl;
+        Point bmu = get_bmu(this->train_data[t]);
+
+        train(this->train_data[t], this->map[bmu.x][bmu.y], 0, c_iteration);
+        train(this->train_data[t], this->map[bmu.x + 1][bmu.y], 1, c_iteration);
+        train(this->train_data[t], this->map[bmu.x + 1][bmu.y + 1], 1, c_iteration);
+        train(this->train_data[t], this->map[bmu.x][bmu.y + 1], 1, c_iteration);
       }
     }
   }
@@ -207,5 +209,30 @@ Som *Som::start_training()
   cout << this->bmu.x << endl;
   cout << this->bmu.y << endl;
   cout << this->bmu.dist << endl;
+  return this;
+}
+
+double Som::lattice_width(const size_t &iteration)
+{
+  return this->neighbor_start * exp(-1 * (iteration / this->iteration_max));
+}
+
+double Som::neighbor_rate(const double &distance, const size_t &iteration)
+{
+  double o = lattice_width(iteration);
+  o *= o;
+  return exp(-((distance * distance) / (2 * o)));
+}
+
+// Es wird ein Neuron trainiert, dabei ist dinstance der Abstand zum BMU
+Som *Som::train(const double *v, double *w, const unsigned short &distance, const size_t &iteration)
+{
+  for (size_t i = 0; i < this->map_z; ++i)
+    tmp[i] = v[i] - w[i];
+  double n_r = neighbor_rate(distance, iteration);
+  for (size_t i = 0; i < this->map_z; ++i)
+  {
+    w[i] = w[i] + n_r * this->alpha_values[iteration] * tmp[i];
+  }
   return this;
 }

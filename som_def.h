@@ -18,8 +18,8 @@ void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_val
 vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
 struct Point
 {
-  unsigned long x;
-  unsigned long y;
+  size_t x;
+  size_t y;
   double dist;
 };
 class Som
@@ -28,7 +28,6 @@ public:
   Som() : map_x(0), map_y(0), map_z(0), alpha(7), iteration_max(5000), neighbor_start(0) {}
   Som(unsigned long x, unsigned long y, unsigned long z);
   ~Som();
-
   Som *set_train_data(const vector<vector<double>> &in_train_data);
   Som *start_training();
 
@@ -40,7 +39,6 @@ public:
   {
     return this->alpha * exp(static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
   }
-
   double *get_bmu_vector()
   {
     return this->map[this->bmu.x][this->bmu.y];
@@ -64,15 +62,19 @@ private:
   double *alpha_values;
   double **train_data;
   unsigned short *neighbor_radius;
+  double *tmp;
 
-  Som *get_bmu(const double *input);
   Som *init_map();
   Som *init_alpha_values();
   Som *init_radius();
+  Som *init_neighbor();
+  Point get_bmu(const double *input);
+  double lattice_width(const size_t &iteration);
   double *get_neighbor(const size_t &in_iteration);
-  double get_distance(const double *train_vector, double *weight);
-  double learning_neighbor(const size_t &in_iteration, double *weight);
+  double neighbor_rate(const double &distance, const size_t &iteration);
+  double get_distance(const double *v, const double *w, const size_t &n);
   Som *train_bmu(unsigned long iteration, double *input, double *weight);
   double learning_linear(const size_t &iteration);
   unsigned short get_neighbor_radius(const size_t &iteration);
+  Som *train(const double *v, double *w, const unsigned short &distance, const size_t &iteration);
 }; // Som

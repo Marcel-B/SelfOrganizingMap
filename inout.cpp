@@ -18,8 +18,7 @@ double In_Out::scale_value(double x, double min, double max, double a, double b)
     return a;
   return x == 0 ? a : a + (b - a) * (x - min) / (max - min);
 }
-
-vector<double> scale_values(const vector<double> &in_column_vector)
+vector<double> In_Out::scale_values(const vector<double> &in_column_vector)
 {
   vector<double> scaled;
   scaled.resize(in_column_vector.size());
@@ -41,7 +40,7 @@ vector<double> scale_values(const vector<double> &in_column_vector)
   return scaled;
 }
 
-void foo_bar(const char *source, vector<vector<double>> &out_scaled_data)
+void In_Out::import_data(const char *source, vector<vector<double>> &out_scaled_data)
 {
   string line;
   ifstream fs;
@@ -79,7 +78,7 @@ void foo_bar(const char *source, vector<vector<double>> &out_scaled_data)
     }
   }
 }
-vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header)
+vector<Merkmal> In_Out::get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header)
 {
   vector<Merkmal> ret_value;
   for (size_t col = 0; col < in_header.size(); ++col)
