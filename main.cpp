@@ -9,10 +9,9 @@ int main()
   In_Out::import_data("copy.csv", scaled_data);
   size_t num_u = scaled_data[0].size();
   cout << num_u << endl;
-  auto som = new Som(500, 590, num_u);
-  som->set_train_data(scaled_data);
+  auto som = new Som(14, 30, num_u);
+  som->set_train_data(scaled_data)->start_training();
   scaled_data.clear();
-  som->start_training();
 
   cout << "Init ready" << endl;
   for (size_t it = 0; it < 50; ++it)
