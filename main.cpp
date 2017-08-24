@@ -9,7 +9,9 @@ int main()
   In_Out::import_data("copy.csv", scaled_data);
   size_t num_u = scaled_data[0].size();
   cout << num_u << endl;
-  auto som = new Som(14, 30, num_u);
+  // auto som = new Som(55, 66, num_u);
+  auto som = Som::open_map("som.som");
+  //som->open_map("som.som");
   som->set_train_data(scaled_data)->start_training();
   scaled_data.clear();
 

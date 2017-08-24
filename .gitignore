@@ -2,4 +2,5 @@
 *.obj
 *.exe
 *.csv
+*.som
 gtest/

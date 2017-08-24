@@ -48,7 +48,7 @@ void In_Out::import_data(const char *source, vector<vector<double>> &out_scaled_
   int cnt = 0;
   fs.open(source);
   if (fs.is_open())
-    while (getline(fs, line) && cnt++ < 10)
+    while (getline(fs, line))
       lines.push_back(line);
   fs.close();
 

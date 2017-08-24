@@ -25,12 +25,12 @@ struct Point
 class Som
 {
 public:
-  Som() : map_x(0), map_y(0), map_z(0), alpha(7), iteration_max(5000), neighbor_start(0) {}
-  Som(unsigned long x, unsigned long y, unsigned long z);
+  Som() : map_x(0), map_y(0), map_z(0), alpha(.7), iteration_max(2), neighbor_start(5) {}
+  Som(size_t x, size_t y, unsigned long z);
   ~Som();
   Som *set_train_data(const vector<vector<double>> &in_train_data);
   Som *start_training();
-
+  static Som *open_map(const char *source);
   double learning_inverse_of_time(unsigned long iteration)
   {
     return this->alpha * (1.0 - static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
@@ -64,14 +64,15 @@ private:
   unsigned short *neighbor_radius;
   double *tmp;
   vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu);
-  
+
   Som *init_map();
   Som *init_alpha_values();
   Som *init_radius();
   Som *init_neighbor();
   Point get_bmu(const double *input);
+  Som* save_map();
+  // void get_bmu_mt(const double *input, const size_t &from, const size_t &to, Point &bmu);
   double lattice_width(const size_t &iteration);
-  double *get_neighbor(const size_t &in_iteration);
   double neighbor_rate(const double &distance, const size_t &iteration);
   double get_distance(const double *v, const double *w, const size_t &n);
   Som *train_bmu(unsigned long iteration, double *input, double *weight);
