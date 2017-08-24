@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Som::Som(size_t x, size_t y, unsigned long z) : alpha(.7),
+Som::Som(size_t x, size_t y, size_t z) : alpha(.7),
                                                 iteration_max(2),
                                                 neighbor_start(5)
 {
@@ -21,13 +21,13 @@ Som::Som(size_t x, size_t y, unsigned long z) : alpha(.7),
   init_map()->init_alpha_values()->init_radius();
   cout << "Initialization ready" << endl;
 }
-unsigned short Som::get_neighbor_radius(const size_t &iteration)
+size_t Som::get_neighbor_radius(const size_t &iteration)
 {
-  return static_cast<unsigned short>(static_cast<double>(this->neighbor_start) * exp(-(static_cast<double>(iteration) / static_cast<double>(this->iteration_max))));
+  return static_cast<size_t>(static_cast<double>(this->neighbor_start) * exp(-(static_cast<double>(iteration) / static_cast<double>(this->iteration_max))));
 }
 Som *Som::init_radius()
 {
-  this->neighbor_radius = static_cast<unsigned short *>(malloc(sizeof(unsigned short) * this->iteration_max));
+  this->neighbor_radius = static_cast<size_t *>(malloc(sizeof(size_t) * this->iteration_max));
   for (size_t iteration = 0; iteration < this->iteration_max; ++iteration)
     this->neighbor_radius[iteration] = get_neighbor_radius(iteration);
   cout << "Neighbor radius ready" << endl;
@@ -51,8 +51,6 @@ Som *Som::init_map()
       }
     }
   }
-
-  this->tmp = static_cast<double *>(malloc(sizeof(double) * this->map_z));
   cout << "Map ready" << endl;
   return this;
 }
@@ -82,9 +80,6 @@ Som::~Som()
 
   delete[] this->neighbor_radius;
   cout << "Neighbor radius deleted" << endl;
-
-  delete[] this->tmp;
-  cout << "Temp vector deleted" << endl;
 
   cout << "Som deallocate process finished (" << this << ")" << endl;
 }
@@ -151,7 +146,7 @@ Som *Som::init_alpha_values()
   cout << "Alpha values ready" << endl;
   return this;
 }
-Som *Som::train_bmu(unsigned long iteration, double *input, double *weight)
+Som *Som::train_bmu(size_t iteration, double *input, double *weight)
 {
   for (size_t w = 0; w < this->map_z; ++w)
   {
@@ -182,7 +177,7 @@ vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu)
       tmp_y = tmp_y >= height ? tmp_y - height : tmp_y;
       tmp.y = tmp_y;
       tmp.x = tmp_x;
-      tmp.dist = abs(r_x) >= abs(r_y) ? abs(r_x) : abs(r_y);
+      tmp.dist = abs(r_x) >= abs(r_y) ? static_cast<double>(abs(r_x)) : static_cast<double>(abs(r_y));
       idx.push_back(tmp);
     }
   }
@@ -208,8 +203,8 @@ void get_bmu_mt(const double *input,
       if (tmp < bmu->dist)
       {
         bmu->dist = tmp;
-        bmu->x = static_cast<unsigned long>(col);
-        bmu->y = static_cast<unsigned long>(row);
+        bmu->x = (col);
+        bmu->y = (row);
       }
     }
   }
@@ -262,7 +257,7 @@ Som *Som::start_training()
         distance += bmu.dist;
         auto idx = get_indices(c_iteration, bmu);
         for (size_t i = 0; i < idx.size(); ++i)
-          train(this->train_data[indices[t]], this->map[idx[i].y][idx[i].x], idx[i].dist, c_iteration);
+          train(this->train_data[indices[t]], this->map[idx[i].y][idx[i].x], static_cast<size_t>(idx[i].dist), c_iteration);
       }
 
       cout << "Quantiziation Error: " << (distance / this->train_data_size) << endl;
@@ -286,7 +281,7 @@ Som *Som::open_map(const char *source)
 {
   auto som = new Som();
   ifstream myFile;
-  myFile.open("som.som", ios::in | ios::binary);
+  myFile.open(source, ios::in | ios::binary);
   myFile.read((char *)&som->map_x, sizeof(som->map_x));
   myFile.read((char *)&som->map_y, sizeof(som->map_y));
   myFile.read((char *)&som->map_z, sizeof(som->map_z));
@@ -332,7 +327,7 @@ Som *Som::save_map()
   return this;
 }
 
-double Som::neighbor_rate(const double &distance, const size_t &iteration)
+double Som::neighbor_rate(const size_t &distance, const size_t &iteration)
 {
   double o = lattice_width(iteration);
   o *= o;
@@ -340,12 +335,10 @@ double Som::neighbor_rate(const double &distance, const size_t &iteration)
 }
 
 // Es wird ein Neuron trainiert, dabei ist dinstance der Abstand zum BMU
-Som *Som::train(const double *v, double *w, const unsigned short &distance, const size_t &iteration)
+Som *Som::train(const double *v, double *w, const size_t &distance, const size_t &iteration)
 {
-  for (size_t i = 0; i < this->map_z; ++i)
-    tmp[i] = (v[i] - w[i]);
   double n_r = neighbor_rate(distance, iteration);
   for (size_t i = 0; i < this->map_z; ++i)
-    w[i] = w[i] + n_r * this->alpha_values[iteration] * tmp[i];
+    w[i] = w[i] + n_r * this->alpha_values[iteration] * (v[i] - w[i]);
   return this;
 }
