@@ -63,7 +63,8 @@ private:
   double **train_data;
   unsigned short *neighbor_radius;
   double *tmp;
-
+  vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu);
+  
   Som *init_map();
   Som *init_alpha_values();
   Som *init_radius();

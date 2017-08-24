@@ -164,15 +164,87 @@ Som *Som::train_bmu(unsigned long iteration, double *input, double *weight)
 }
 vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu)
 {
-  auto radius = this->neighbor_radius[iteration];
-  size_t x = bmu.x;
-  size_t y = bmu.y;
+  short radius = static_cast<short>(this->neighbor_radius[iteration]);
+  long long x = bmu.x;
+  long long y = bmu.y;
   vector<Point> idx;
-  idx.resize(radius * 4 + radius * radius * 4);
-  for(size_t i = 1; i <= radius; ++i){
+  size_t po = (radius * 4 + radius * radius * 4) + 1;
+
+  // von oben nach unten, gerade
+  for (long long r_y = -1 * radius; r_y <= radius; ++r_y)
+  {
+    // if (r_y == 0)
+    //   continue;
     Point tmp;
-    tmp.x 
+    tmp.x = x;
+    if (y + r_y < 0)
+      tmp.y = this->map_y - (r_y - y) + 1;
+    if (y + r_y >= this->map_y - 1)
+      tmp.y = y + r_y - this->map_y - 1;
+    else
+      tmp.y = y + r_y;
+    tmp.dist = abs(radius);
+    idx.push_back(tmp);
   }
+  // Nach links laufen
+  for (long long r_x = 1; r_x <= radius; ++r_x)
+  {
+    // Nach Oben laufen
+    for (long long r_y = 0; r_y <= radius; ++r_y)
+    {
+      Point tmp;
+      if (x < r_x)
+        tmp.x = this->map_x - (r_x - x) + 1;
+      else
+        tmp.x = x - r_x;
+
+      if (y < r_y)
+        tmp.y = this->map_y - (r_y - y) + 1;
+      else
+        tmp.y = y - r_y;
+
+      tmp.dist = r_y >= r_x ? r_y : r_x;
+      idx.push_back(tmp);
+    }
+    // Nach Unten laufen
+    for (long long r_y = 1; r_y <= radius; ++r_y)
+    {
+      Point tmp;
+      if (x < r_x)
+        tmp.x = this->map_x - (r_x - x) + 1;
+      else
+        tmp.x = x - r_x;
+      tmp.y = y + r_y;
+      tmp.dist = r_y >= r_x ? r_y : r_x;
+      idx.push_back(tmp);
+    }
+  }
+  // Nach rechts laufen
+  for (long long r_x = 1; r_x <= radius; ++r_x)
+  {
+    // Nach Oben laufen
+    for (long long r_y = 0; r_y <= radius; ++r_y)
+    {
+      Point tmp;
+      tmp.x = x + r_x;
+      if (y < r_y)
+        tmp.y = this->map_y - (r_y - y) + 1;
+      else
+        tmp.y = y - r_y;
+      tmp.dist = r_y >= r_x ? r_y : r_x;
+      idx.push_back(tmp);
+    }
+    // Nach Unten laufen
+    for (long long r_y = 1; r_y <= radius; ++r_y)
+    {
+      Point tmp;
+      tmp.x = x + r_x;
+      tmp.y = y + r_y;
+      tmp.dist = r_y >= r_x ? r_y : r_x;
+      idx.push_back(tmp);
+    }
+  }
+  return idx;
   // = r * 4 + r^2 * 4
   // 1 = 8
   // 2 = 24
@@ -194,11 +266,12 @@ Som *Som::start_training()
       // for (size_t t = 0; t <10; ++t)
       {
         Point bmu = get_bmu(this->train_data[t]);
-
-        train(this->train_data[t], this->map[bmu.x][bmu.y], 0, c_iteration);
-        train(this->train_data[t], this->map[bmu.x + 1][bmu.y], 1, c_iteration);
-        train(this->train_data[t], this->map[bmu.x + 1][bmu.y + 1], 1, c_iteration);
-        train(this->train_data[t], this->map[bmu.x][bmu.y + 1], 1, c_iteration);
+        auto idx = get_indices(c_iteration, this->bmu);
+        for (size_t i = 0; i < idx.size(); ++i)
+        {
+          cout << i << " . " << t << endl;
+          train(this->train_data[t], this->map[idx[i].x][idx[i].y], idx[i].dist, c_iteration);
+        }
       }
     }
   }

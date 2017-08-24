@@ -1,3 +1,6 @@
 foo:
 	cl /W4 /EHsc main.cpp som.cpp inout.cpp /O2 /link /out:som.exe
 	del *.obj
+
+test:
+	cl /W4 /EHsc test\test.cpp test\gtest.lib
