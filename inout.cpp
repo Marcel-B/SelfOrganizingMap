@@ -54,16 +54,16 @@ void In_Out::import_data(const char *source, vector<vector<double>> &out_scaled_
 
   vector<vector<double>> values;
   vector<string> header;
+
+  parse_lines(lines, out_scaled_data, header);
+  auto merkmale = get_merkmal(out_scaled_data, header);
   size_t hlen = 0;
   for (size_t i = 0; i < header.size(); ++i)
     hlen = hlen < header[i].size() ? header[i].size() : hlen;
   hlen += 3;
-  cout << hlen << endl;
-  parse_lines(lines, out_scaled_data, header);
-  auto merkmale = get_merkmal(out_scaled_data, header);
-  cout << setw(hlen) << left << "Name" << right << setw(10) << "min" << setw(10) << "max" << endl;
+  cout << setw(hlen) << left << "Name" << right << setw(15) << "min" << setw(15) << "max" << endl;
   for (size_t i = 0; i < merkmale.size(); ++i)
-    cout << setw(hlen) << left << merkmale[i].name << right << setw(10) << setprecision(5) << fixed << merkmale[i].min << setw(10) << merkmale[i].max << endl;
+    cout << setw(hlen) << left << merkmale[i].name << right << setw(15) << setprecision(5) << fixed << merkmale[i].min << setw(15) << merkmale[i].max << endl;
 
   vector<double> tmp_col;
   for (size_t i = 0; i < header.size(); ++i)
