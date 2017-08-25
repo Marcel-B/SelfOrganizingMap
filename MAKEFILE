@@ -1,5 +1,5 @@
 foo:
-	cl /W4 /EHsc main.cpp som.cpp inout.cpp /O2 /link /out:som.exe
+	cl /W4 /EHsc main.cpp som.cpp set.cpp inout.cpp /O2 /link /out:som.exe
 	del *.obj
 
 test:

@@ -1,4 +1,5 @@
-#include "som_def.h"
+#include "som.hpp"
+#include "types.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
@@ -7,10 +8,11 @@
 #include <thread>
 
 using namespace std;
-
+namespace b_velop
+{
 Som::Som(size_t x, size_t y, size_t z) : alpha(.7),
-                                                iteration_max(2),
-                                                neighbor_start(5)
+                                         iteration_max(2),
+                                         neighbor_start(5)
 {
   this->map_x = x;
   this->map_y = y;
@@ -18,7 +20,6 @@ Som::Som(size_t x, size_t y, size_t z) : alpha(.7),
   size_t bigger = x < y ? x : y;
   bigger = bigger / 2 - 1;
   this->neighbor_start = this->neighbor_start > bigger ? bigger : this->neighbor_start;
-  init_map()->init_alpha_values()->init_radius();
   cout << "Initialization ready" << endl;
 }
 size_t Som::get_neighbor_radius(const size_t &iteration)
@@ -54,7 +55,23 @@ Som *Som::init_map()
   cout << "Map ready" << endl;
   return this;
 }
-
+Som *Som::set_alpha(const double &in_alpha)
+{
+  this->alpha = in_alpha;
+  return this;
+}
+Som *Som::set_iteration_max(const size_t &in_iteration_max)
+{
+  this->iteration_max = in_iteration_max;
+  return this;
+}
+Som *Som::set_neighbor_start(const size_t &in_neighbor_start)
+{
+  size_t bigger = this->map_x < this->map_y ? this->map_x : this->map_y;
+  bigger = bigger / 2 - 1;
+  this->neighbor_start = in_neighbor_start > bigger ? bigger : in_neighbor_start;
+  return this;
+}
 Som::~Som()
 {
   cout << "Som deallocate process started" << endl;
@@ -82,6 +99,21 @@ Som::~Som()
   cout << "Neighbor radius deleted" << endl;
 
   cout << "Som deallocate process finished (" << this << ")" << endl;
+}
+Som *Som::set_train_data(const Set *in_train_data)
+{
+  this->train_data_size = in_train_data->rows;
+  this->train_data = static_cast<double **>(malloc(sizeof(double *) * this->train_data_size));
+  for (size_t i = 0; i < this->train_data_size; ++i)
+  {
+    this->train_data[i] = static_cast<double *>(malloc(sizeof(double) * in_train_data->cols));
+    for (size_t w = 0; w < in_train_data->cols; ++w)
+    {
+      this->train_data[i][w] = in_train_data->values[i][w];
+    }
+  }
+  cout << "Input Data ready - " << this->train_data_size << " Datasets" << endl;
+  return this;
 }
 
 // Die Traingsdaten kopieren
@@ -210,9 +242,20 @@ void get_bmu_mt(const double *input,
   }
   bmu->dist = sqrt(bmu->dist);
 }
+Som *Som::set_dimensions(const size_t &rows, const size_t &columns)
+{
+  this->map_x = columns;
+  this->map_y = rows;
+  size_t bigger = this->map_x < this->map_y ? this->map_x : this->map_y;
+  bigger = bigger / 2 - 1;
+  this->neighbor_start = this->neighbor_start > bigger ? bigger : this->neighbor_start;
+  return this;
+}
+
 Som *Som::start_training()
 {
   cout << "start_training called" << endl;
+  init_map()->init_alpha_values()->init_radius();
   cout << this->train_data_size << endl;
   cout << this->iteration_max << endl;
   cout << this->map_z << endl;
@@ -341,4 +384,33 @@ Som *Som::train(const double *v, double *w, const size_t &distance, const size_t
   for (size_t i = 0; i < this->map_z; ++i)
     w[i] = w[i] + n_r * this->alpha_values[iteration] * (v[i] - w[i]);
   return this;
+}
+Validation Som::validation(const Set *set)
+{
+  Validation validation;
+  double v = 0;
+  vector<ValidSet> vs;
+  for (size_t row = 0; row < set->rows; ++row)
+  {
+    auto bmu = get_bmu(set->values[row]);
+    ValidSet tmp;
+    tmp.w = this->map_z;
+    for (size_t w = 0; w < tmp.w; ++w)
+    {
+      tmp.in.push_back(set->values[row][w]);
+      tmp.out.push_back(this->map[bmu.y][bmu.x][w]);
+      tmp.x = bmu.x;
+      tmp.y = bmu.y;
+      tmp.d = bmu.dist;
+    }
+    vs.push_back(tmp);
+    v += bmu.dist;
+  }
+  v /= vs.size();
+  validation.valid_set = vs;
+  validation.distance = v;
+  cout << endl
+       << "Distance Over All: " << v << endl;
+  return validation;
+}
 }

@@ -4,23 +4,11 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "types.hpp"
 
 using namespace std;
-
-struct Merkmal
+namespace b_velop
 {
-  string name;
-  double max;
-  double min;
-};
-// void foo_bar(const char *source, vector<vector<double>> &out_scaled_data);
-// vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
-struct Point
-{
-  size_t x;
-  size_t y;
-  double dist;
-};
 class Som
 {
 public:
@@ -28,8 +16,15 @@ public:
   Som(size_t x, size_t y, size_t z);
   ~Som();
   Som *set_train_data(const vector<vector<double>> &in_train_data);
+  Som *set_train_data(const Set *in_train_data);
+  Som *set_alpha(const double &in_alpha);
+  Som *set_iteration_max(const size_t &in_iteration_max);
+  Som *set_neighbor_start(const size_t &in_neighbor_start);
+  Som *set_dimensions(const size_t &rows, const size_t &columns);
   Som *start_training();
+  Validation validation(const Set *set);
   static Som *open_map(const char *source);
+
   double learning_inverse_of_time(unsigned long iteration)
   {
     return this->alpha * (1.0 - static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
@@ -38,13 +33,8 @@ public:
   {
     return this->alpha * exp(static_cast<double>(iteration) / static_cast<double>(this->iteration_max));
   }
-  // double *get_bmu_vector()
-  // {
-  //   return this->map[this->bmu.x][this->bmu.y];
-  // }
   // http://www.cis.hut.fi/somtoolbox/documentation/somalg.shtml
   // http://www.saedsayad.com/clustering_som.htm
-
   Som *init();
 
 private:
@@ -67,7 +57,7 @@ private:
   Som *init_radius();
   Som *init_neighbor();
   Point get_bmu(const double *input);
-  Som* save_map();
+  Som *save_map();
   // void get_bmu_mt(const double *input, const size_t &from, const size_t &to, Point &bmu);
   double lattice_width(const size_t &iteration);
   double neighbor_rate(const size_t &distance, const size_t &iteration);
@@ -77,3 +67,4 @@ private:
   size_t get_neighbor_radius(const size_t &iteration);
   Som *train(const double *v, double *w, const size_t &distance, const size_t &iteration);
 }; // Som
+}

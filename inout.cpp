@@ -4,13 +4,16 @@
 #include <vector>
 #include <limits>
 #include <iomanip>
-#include "inout.h"
-#include "som_def.h"
+#include "inout.hpp"
+#include "som.hpp"
+#include "types.hpp"
+#include <algorithm>
 
 #define SEP ','
 
 using namespace std;
-
+namespace b_velop
+{
 // a = unterer Zielwert, b = oberer Zielwert
 double In_Out::scale_value(double x, double min, double max, double a, double b)
 {
@@ -39,13 +42,28 @@ vector<double> In_Out::scale_values(const vector<double> &in_column_vector)
       scaled[i] = 0.05;
   return scaled;
 }
+void In_Out::save_set(const Set *in_set, const char *destination)
+{
+  ofstream of;
+  of.open(destination, ios::out);
+  if (of.is_open())
+  {
+    for (size_t row = 0; row < in_set->rows; ++row)
+    {
+      of << in_set->values[row][0];
+      for (size_t col = 1; col < in_set->cols; ++col)
+        of << SEP << in_set->values[row][col];
+      of << endl;
+    }
+    of.close();
+  }
+}
 
 void In_Out::import_data(const char *source, vector<vector<double>> &out_scaled_data)
 {
   string line;
   ifstream fs;
   vector<string> lines;
-  int cnt = 0;
   fs.open(source);
   if (fs.is_open())
     while (getline(fs, line))
@@ -140,4 +158,5 @@ void In_Out::parse_lines(const vector<string> &in_lines, vector<vector<double>> 
     } while (idx >= 0);
     out_values.push_back(row);
   }
+}
 }
