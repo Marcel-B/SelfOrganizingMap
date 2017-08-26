@@ -59,6 +59,7 @@ void In_Out::save_set(const Set *in_set, const char *destination)
   }
 }
 
+// Data will be imported
 void In_Out::import_data(const char *source, vector<vector<double>> &out_scaled_data)
 {
   string line;
