@@ -4,3 +4,8 @@ foo:
 
 test:
 	cl /W4 /EHsc test\test.cpp test\gtest.lib
+
+clean:
+	del *.obj
+	del *.set
+	del *.exp
