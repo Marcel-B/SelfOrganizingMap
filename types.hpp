@@ -5,6 +5,9 @@
 using namespace std;
 namespace b_velop
 {
+/*
+* Metainfo zu einer Spalte
+*/
 struct Merkmal
 {
   string name;
