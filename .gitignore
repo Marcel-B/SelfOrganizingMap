@@ -4,3 +4,6 @@
 *.csv
 *.som
 gtest/
+docs/html/
+docs/latex/
+
