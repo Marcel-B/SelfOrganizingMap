@@ -1,9 +1,18 @@
+CC      = /usr/bin/g++
+CFLAGS  = -Wall -g -D_GNU_SOURCE
+LDFLAGS = -lm
+OBJ = som.o inout.o set.o 
+
 foo:
 	cl /W4 /EHsc main.cpp som.cpp set.cpp inout.cpp /O2 /link /out:som.exe
 	del *.obj
 
 test:
 	cl /W4 /EHsc test\test.cpp test\gtest.lib
+
+LinuxStatic: libsom.a
+	$(CC) $(CFLAGS) -o Som libsom.a $(LDFLAGS)
+
 
 clean:
 	del *.obj
