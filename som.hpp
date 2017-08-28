@@ -50,7 +50,7 @@ private:
   double *alpha_values;
   double **train_data;
   size_t *neighbor_radius;
-  vector<Point> b_velop::Som::get_indices(const size_t &iteration, const Point &bmu);
+  vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu);
 
   Som *init_map();
   Som *init_alpha_values();
