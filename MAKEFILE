@@ -12,7 +12,6 @@ test:
 
 
 LinuxStatic: $(OBJ)
-	$(CC) $(CFLAGS) -o Som libsom.a $(LDFLAGS)
 	ar crs libsom.a $(OBJ)
 	
 
