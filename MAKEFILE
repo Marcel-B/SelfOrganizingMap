@@ -10,8 +10,11 @@ foo:
 test:
 	cl /W4 /EHsc test\test.cpp test\gtest.lib
 
-LinuxStatic:
+
+LinuxStatic: $(OBJ)
 	$(CC) $(CFLAGS) -o Som libsom.a $(LDFLAGS)
+	ar crs libsom.a $(OBJ)
+	
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -fPIC $<
