@@ -10,12 +10,12 @@ foo:
 test:
 	cl /W4 /EHsc test\test.cpp test\gtest.lib
 
-LinuxStatic: libsom.a
+LinuxStatic:
 	$(CC) $(CFLAGS) -o Som libsom.a $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -fPIC $<
-	
+
 clean:
 	del *.obj
 	del *.set
