@@ -6,5 +6,6 @@
 gtest/
 docs/html/
 docs/latex/
+__pycache__/
 html/
 latex/

@@ -13,7 +13,9 @@ test:
 LinuxStatic: libsom.a
 	$(CC) $(CFLAGS) -o Som libsom.a $(LDFLAGS)
 
-
+%.o: %.c
+	$(CC) $(CFLAGS) -c -fPIC $<
+	
 clean:
 	del *.obj
 	del *.set
