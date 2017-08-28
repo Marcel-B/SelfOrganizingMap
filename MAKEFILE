@@ -14,7 +14,6 @@ test:
 LinuxStatic: $(OBJ)
 	ar crs libsom.a $(OBJ)
 	
-
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c -fPIC $<
 
