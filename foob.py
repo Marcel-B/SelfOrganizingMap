@@ -28,3 +28,16 @@ class Ui_Form(object):
         self.pushButton.setText(_translate("Form", "PushButton"))
         self.label.setText(_translate("Form", "TextLabel"))
 
+if __name__ == '__main__':
+    import sys
+if __name__ == '__main__':
+    import sys
+
+    from PyQt5.QtWidgets import QApplication
+
+    app = QApplication(sys.argv)
+
+    addressBook = AddressBook()
+    addressBook.show()
+
+    sys.exit(app.exec_())
