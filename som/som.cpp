@@ -1,11 +1,12 @@
 #include "som.hpp"
-#include "types.hpp"
+#include "../infrastructure/types.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <random>
 #include <algorithm> // std::random_shuffle
 #include <thread>
+#include <stdlib.h>
 
 using namespace std;
 namespace b_velop
@@ -18,13 +19,15 @@ Som::Som(size_t x, size_t y, size_t z) : alpha(.7),
   this->map_y = y;
   this->map_z = z;
   size_t bigger = x < y ? x : y;
-  bigger = bigger / 2 - 1;
-  this->neighbor_start = this->neighbor_start > bigger ? bigger : this->neighbor_start;
-  cout << "Initialization ready" << endl;
+    bigger = bigger / 2 - 1;
+    this->neighbor_start = this->neighbor_start > bigger ? bigger : this->neighbor_start;
+    cout << "Initialization ready" << endl;
 }
 size_t Som::get_neighbor_radius(const size_t &iteration)
 {
-  return static_cast<size_t>(static_cast<double>(this->neighbor_start) * exp(-(static_cast<double>(iteration) / static_cast<double>(this->iteration_max))));
+  return static_cast<size_t>(static_cast<double>(this->neighbor_start)
+                             * exp(-(static_cast<double>(iteration)
+                                     / static_cast<double>(this->iteration_max))));
 }
 Som *Som::init_radius()
 {

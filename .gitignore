@@ -9,3 +9,6 @@ docs/latex/
 __pycache__/
 html/
 latex/
+cmake-build-debug/
+cmake-build-release/
+.idea/

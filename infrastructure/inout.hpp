@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "som.hpp"
+#include "../som/som.hpp"
 #include "types.hpp"
 
 namespace b_velop

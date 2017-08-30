@@ -1,6 +1,6 @@
-#include "som.hpp"
-#include "inout.hpp"
-#include "types.hpp"
+#include "som/som.hpp"
+#include "infrastructure/inout.hpp"
+#include "infrastructure/types.hpp"
 #include <iostream>
 #include <thread>
 #include <string>
