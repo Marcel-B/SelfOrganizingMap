@@ -55,10 +55,34 @@ namespace com_b_velop
     size_t *neighbor_radius;
     vector<Point> get_indices(const size_t &iteration, const Point &bmu);
 
+    /**
+     * Die Speicher für die Karte wird allokiert. Alle Gewichte werden mit zufälligen Werten
+     * zwischen 0.0 und 1.0 vorbelegt.
+     * @return das aufrufende Som-Objekt
+     */
     Som *InitMap();
+
+    /**
+     * Es wird ein Feld mit den jeweiligen, iterationsabhängigen Lernraten erstellt.
+     * @return das aufrufende Som-Objekt
+     */
     Som *InitAlphaValues();
+
+    /**
+     * Es wird ein Feld mit den jeweiligen, iterationsabhängigen Nachbarradien erstellt.
+     * @return das aufrufende Som-Objekt
+     */
     Som *InitRadius();
+
+
     Som *init_neighbor();
+
+    /**
+     * Bmu Suche. Die Funktion durchläuft die gesamte und sucht das Neuron, was input am ähnlichsten ist.
+     * Die Koordinate und die Distanz werden in Point festgehalten.
+     * @param input Ein Vektor der eine Zeile aus den Trainingsdaten enthält
+     * @return Ein Point-Objekt mit den Koordinaten des BMU und der Distanz zum BMU
+     */
     Point GetBmu(const double *input);
     Som *save_map();
     // void get_bmu_mt(const double *input, const size_t &from, const size_t &to, Point &bmu);

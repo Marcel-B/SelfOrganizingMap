@@ -14,11 +14,11 @@ namespace com_b_velop{
     size_t cols;
     Set(){};
     Set(const vector<vector<double>> &in_values);
+    ~Set();
     Set *SetSet(const vector<vector<double>> &in_values);
     Set *SplitValues(const unsigned short &in_percent);
     Set *InitValues(const size_t &in_rows, const size_t &in_cols);
     Set *DeallocValues();
-    ~Set();
     static Set *OpenSet(const char *in_source);
     Set *SaveSet(const char *in_destination);
   };

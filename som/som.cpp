@@ -257,6 +257,11 @@ namespace com_b_velop
     return this;
   }
 
+  /**
+   * Die Iteration wird in gang gesetzt. Die Karte
+   * wird nach Vorgabe trainiert und anschließend gespeichert.
+   * @return Die trainierte Karte
+   */
   Som *Som::StartTraining()
   {
     cout << "StartTraining called" << endl;
