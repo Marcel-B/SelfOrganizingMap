@@ -5,12 +5,6 @@
 using namespace std;
 namespace com_b_velop
 {
-/*
-* Metainfo zu einer Spalte
-*/
-
-// void foo_bar(const char *source, vector<vector<double>> &out_scaled_data);
-// vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
   struct Point
   {
     size_t x;
@@ -25,6 +19,7 @@ namespace com_b_velop
     double d;
     vector<double> out;
     vector<double> in;
+    vector<double> delta;
   };
   struct Validation
   {

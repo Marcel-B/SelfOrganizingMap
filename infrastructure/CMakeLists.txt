@@ -6,7 +6,7 @@ set(HEADER_FILES
         set.h
         setinfo.h
         feature.h
-        inout.hpp)
+        inout.h)
 
 set(SOURCE_FILES
         help.cpp

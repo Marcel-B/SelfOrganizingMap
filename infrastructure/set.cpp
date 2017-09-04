@@ -24,35 +24,45 @@ namespace com_b_velop
     cout << "Set (" << this << ") killed" << endl;
   }
   Set *Set::SaveSet(const char *in_destination){
+    std::cout << "Store Set to: " << in_destination << std::endl;
     ofstream fs;
     fs.open(in_destination, ios::out | ios::binary);
     if (fs.is_open())
     {
       fs.write((char *)&this->rows, sizeof(this->rows));
       fs.write((char *)&this->cols, sizeof(this->cols));
+      this->SaveSetInfo(fs);
       for (size_t row = 0; row < this->rows; ++row)
         for (size_t col = 0; col < this->cols; ++col)
           fs.write((char *)&this->values[row][col], sizeof(this->values[row][col]));
       fs.close();
     }
+    else{
+      std::cerr << "I/O Error - can't write Set to Filesystem" << std::endl;
+    }
     return this;
   }
   Set *Set::OpenSet(const char *in_source){
+    // std::cout << "Open Set: " << in_source << std::endl;
     auto set = new Set();
     ifstream fs;
     fs.open(in_source, ios::in | ios::binary);
     size_t tmp_rows = 0;
     size_t tmp_cols = 0;
+    SetInfo info;
     if (fs.is_open())
     {
       fs.read((char *)&tmp_rows, sizeof(tmp_rows));
       fs.read((char *)&tmp_cols, sizeof(tmp_cols));
+      info = SetInfo::OpenSetInfo(fs);
       set->InitValues(tmp_rows, tmp_cols);
       for (size_t row = 0; row < set->rows; ++row)
         for (size_t col = 0; col < set->cols; ++col)
           fs.read((char *)&set->values[row][col], sizeof(set->values[row][col]));
       fs.close();
     }
+    set->features_size = info.features_size;
+    set->features = info.features;
     return set;
   }
 
@@ -66,7 +76,7 @@ namespace com_b_velop
     }
     this->rows = in_rows;
     this->cols = in_cols;
-    cout << "Process init_values ready" << endl;
+    // cout << "Process init_values ready" << endl;
     return this;
   }
   Set *Set::DeallocValues(){

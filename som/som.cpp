@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <random>
 #include <algorithm> // std::random_shuffle
 #include <thread>
@@ -172,8 +173,7 @@ namespace com_b_velop
     return this->alpha * 1.0 / static_cast<double>((iteration + 1));
   }
 
-  Som *Som::InitAlphaValues()
-  {
+  Som *Som::InitAlphaValues(){
     this->alpha_values = static_cast<double *>(malloc(sizeof(double) * this->iteration_max));
     this->alpha_values[0] = this->alpha;
     for (size_t iteration = 1; iteration < this->iteration_max; ++iteration)
@@ -183,16 +183,14 @@ namespace com_b_velop
     cout << "Alpha values ready" << endl;
     return this;
   }
-  Som *Som::TrainBmu(size_t iteration, double *input, double *weight)
-  {
+  Som *Som::TrainBmu(size_t iteration, double *input, double *weight){
     for (size_t w = 0; w < this->map_z; ++w)
     {
       weight[w] = weight[w] + alpha_values[iteration] * (input[w] - weight[w]);
     }
     return this;
   }
-  vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu)
-  {
+  vector<Point> Som::get_indices(const size_t &iteration, const Point &bmu){
     long long radius = static_cast<long long>(this->neighbor_radius[iteration]);
     long long x = bmu.x;
     long long y = bmu.y;
@@ -226,8 +224,7 @@ namespace com_b_velop
                   double ***map,
                   size_t n,
                   size_t w,
-                  Point *bmu)
-  {
+                  Point *bmu){
     bmu->dist = numeric_limits<double>::max();
 
     for (size_t row = from; row < to; ++row)
@@ -247,8 +244,7 @@ namespace com_b_velop
     }
     bmu->dist = sqrt(bmu->dist);
   }
-  Som *Som::SetDimension(const size_t &rows, const size_t &columns)
-  {
+  Som *Som::SetDimension(const size_t &rows, const size_t &columns){
     this->map_x = columns;
     this->map_y = rows;
     size_t bigger = this->map_x < this->map_y ? this->map_x : this->map_y;
@@ -262,8 +258,7 @@ namespace com_b_velop
    * wird nach Vorgabe trainiert und anschließend gespeichert.
    * @return Die trainierte Karte
    */
-  Som *Som::StartTraining()
-  {
+  Som *Som::StartTraining(){
     cout << "StartTraining called" << endl;
     InitMap()->InitAlphaValues()->InitRadius();
     cout << this->train_data_size << endl;
@@ -285,7 +280,8 @@ namespace com_b_velop
       {
         std::random_shuffle(indices.begin(), indices.end());
         distance = 0;
-        cout << "IT: " << c_iteration << endl;
+        cout << "|=================================|" << endl;
+        cout << left << setw(22) << setfill('_') <<  "|Iteration" << setw(12) << right << (c_iteration + 1) <<"|"<< endl;
 
         for (size_t t = 0; t < this->train_data_size; ++t)
         {
@@ -314,25 +310,38 @@ namespace com_b_velop
                   c_iteration);
         }
 
-        cout << "Quantiziation Error: " << (distance / this->train_data_size) << endl;
-        cout << "Alpha  : " << this->alpha_values[c_iteration] << endl;
-        cout << "Radius : " << this->neighbor_radius[c_iteration] << endl;
+        cout << left << setw(22) << "|Quantiziation Error" << setw(12) << right << setprecision(8) << (distance / this->train_data_size) <<"|"<< endl;
+        cout << left << setw(22) << "|Alpha" << setw(12) << right  << setprecision(8) << this->alpha_values[c_iteration]<<"|" << endl;
+        cout << left << setw(22) << "|Radius" << setw(12) << right << setprecision(8)  << this->neighbor_radius[c_iteration] <<"|"<< endl;
         dist.push_back(distance / this->train_data_size);
       }
-    }
+    } // c_iteration
     catch (...)
     {
       cout << "Shit happens" << endl;
     }
+    auto dd = .0;
+    auto mintr = 50.0;
     for (size_t i = 0; i < dist.size(); ++i)
-      cout << "Distance " << dist[i] << endl;
+    {
+      dd += dist[i];
+      mintr = mintr < dist[i] ? mintr : dist[i];
+    }
+    dd /= dist.size();
+    cout << "|=================================|" << endl;
+
+    cout << setw(22) << left
+         << "|Train Distance Avg" << setw(12) << right << setprecision(8) <<  dd<<"|" << endl;
+    cout << setw(22) << left
+         << "|Train Distance Min" << setw(12) << right << setprecision(8) <<  mintr <<"|"<< endl;
+    cout << setw(22) << left
+         << "|Train Distance Last" << setw(12) << right << setprecision(8) <<  dist[dist.size()-1]<<"|" << endl;
     delete bmu1;
     delete bmu2;
-    save_map();
+    SaveMap();
     return this;
   }
-  Som *Som::OpenMap(const char *source)
-  {
+  Som *Som::OpenMap(const char *source){
     auto som = new Som();
     ifstream myFile;
     myFile.open(source, ios::in | ios::binary);
@@ -354,13 +363,10 @@ namespace com_b_velop
     myFile.close();
     return som;
   }
-
-  double Som::lattice_width(const size_t &iteration)
-  {
+  double Som::lattice_width(const size_t &iteration){
     return this->neighbor_start * exp(-1 * (iteration / this->iteration_max));
   }
-  Som *Som::save_map()
-  {
+  Som *Som::SaveMap(){
     ofstream myFile;
     myFile.open("som.som", ios::out | ios::binary);
     myFile.write((char *)&this->map_x, sizeof(this->map_x));
@@ -380,7 +386,6 @@ namespace com_b_velop
     myFile.close();
     return this;
   }
-
   double Som::NeighborRate(const size_t &distance, const size_t &iteration){
     double o = lattice_width(iteration);
     o *= o;
@@ -406,11 +411,11 @@ namespace com_b_velop
       for (size_t w = 0; w < tmp.w; ++w)
       {
         auto j = set->values[row][w];
+        auto u = this->map[bmu.y][bmu.x][w];
+        tmp.delta.push_back(j - u);
         j = com_b_velop::Help::ScaleValue(j, 0, 1, set->features[w].min, set->features[w].max);
-
         tmp.in.push_back(j);
         // tmp.in.push_back(set->values[row][w]);
-        auto u = this->map[bmu.y][bmu.x][w];
         u = com_b_velop::Help::ScaleValue(u, 0, 1, set->features[w].min, set->features[w].max);
         // tmp.out.push_back(this->map[bmu.y][bmu.x][w]);
         tmp.out.push_back(u);
@@ -424,8 +429,11 @@ namespace com_b_velop
     v /= vs.size();
     validation.valid_set = vs;
     validation.distance = v;
-    cout << endl
-         << "Distance Over All: " << v << endl;
+    cout << "|=================================|" << endl;
+    cout << left << setw(22) << "|Validation Distance" << setprecision(8) << right << setw(12) << v <<"|"<< endl;
+    cout << setw(22) << left << "|Test Data Size" << setw(12) << right << setprecision(8)  << validation.valid_set.size()<<"|" << endl;
+    cout << "|=================================|" << endl;
+
     return validation;
   }
 }

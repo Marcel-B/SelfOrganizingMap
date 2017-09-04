@@ -11,7 +11,35 @@ namespace com_b_velop{
   struct SetInfo
   {
     std::vector<Feature> features;
-    void print() const;
+
+    /**
+     * Anzahl der Features im Trainingssatz
+     */
+    size_t features_size;
+
+    /**
+     * Serialisiert SetInfo
+     * @param stream Ein Datenstream
+     * @return Ein SetInfo-Objekt wird zurückgegeben
+     */
+    SetInfo SaveSetInfo(std::ofstream &stream);
+
+    /**
+     * Deserialisiert SetInfo
+     * @param stream Der Dateistream
+     * @return Das geladene SetInfo-Objekt
+     */
+    static SetInfo OpenSetInfo(std::ifstream &stream);
+
+    /**
+     * Gibt Informationen über das SetInfo-Objekt in der Standardausgabe aus
+     */
+    void Print() const;
+
+    /**
+     * Gibt Informationen über das SetInfo-Objekt zurück
+     * @return Informationen als String
+     */
     std::string ToString() const;
   };
 } // namespace com_b_velop

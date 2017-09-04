@@ -4,7 +4,7 @@
 #include <vector>
 #include <limits>
 #include <iomanip>
-#include "inout.hpp"
+#include "inout.h"
 #include "../som/som.hpp"
 #include "types.hpp"
 #include <algorithm>
@@ -54,8 +54,8 @@ namespace com_b_velop
     }
   }
 
-/** Data will be imported
- *
+/**
+ * Data will be imported
  * @param source Path to the formated csv-File
  * @param out_scaled_data 2D vector<double> with scaled data between 0 and 1
  */
@@ -77,6 +77,7 @@ namespace com_b_velop
     ParseLines(lines, values, header);
     auto features = GetFeatures(values, header);
     out_set->features = features;
+    out_set->features_size = features.size();
     size_t hlen = 0;
     for (size_t i = 0; i < header.size(); ++i)
       hlen = hlen < header[i].size() ? header[i].size() : hlen;

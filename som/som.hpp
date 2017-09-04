@@ -84,7 +84,7 @@ namespace com_b_velop
      * @return Ein Point-Objekt mit den Koordinaten des BMU und der Distanz zum BMU
      */
     Point GetBmu(const double *input);
-    Som *save_map();
+    Som *SaveMap();
     // void get_bmu_mt(const double *input, const size_t &from, const size_t &to, Point &bmu);
     double lattice_width(const size_t &iteration);
     double NeighborRate(const size_t &distance, const size_t &iteration);

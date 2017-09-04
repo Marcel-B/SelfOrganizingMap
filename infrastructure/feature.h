@@ -15,5 +15,5 @@ namespace com_b_velop{
     std::string ToString() const;
     std::string ToString(size_t width) const;
   };
-}
+} // namespace com_b_velop
 #endif //SOM_FEATURE_H
