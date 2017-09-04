@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(Som)
 
-add_definitions(/EHsc)
+#add_definitions(/EHsc)
+set (CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES main.cpp)
 add_executable(som_run ${SOURCE_FILES})

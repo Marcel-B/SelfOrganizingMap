@@ -1,17 +1,18 @@
 #pragma once
 #include <vector>
 #include "../som/som.hpp"
+#include "feature.h"
 #include "types.hpp"
+#include "set.h"
 
-namespace b_velop
+namespace com_b_velop
 {
-struct In_Out
-{
-  static double scale_value(double x, double min, double max, double a, double b);
-  static vector<double> scale_values(const vector<double> &in_column_vector);
-  static void import_data(const char *source, vector<vector<double>> &out_scaled_data);
-  static void parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &header);
-  static vector<Merkmal> get_merkmal(const vector<vector<double>> &in_values, const vector<string> &in_header);
-  static void save_set(const Set *in_set, const char *destination);
-};
-}
+  struct InOut
+  {
+    static vector<double> ScaleValues(const vector<double> &in_column_vector);
+    static void ImportData(const char *source, com_b_velop::Set *out_scaled_data);
+    static void ParseLines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &header);
+    static vector<Feature> GetFeatures(const vector<vector<double>> &in_values, const vector<string> &in_header);
+    static void SaveSet(const Set *in_set, const char *destination);
+  };
+} // namespace com_b_velop
