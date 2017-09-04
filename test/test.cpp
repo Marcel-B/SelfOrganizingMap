@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-//#include "../../infrastructure/types.hpp"
+#include "../types.hpp"
 namespace
 {
 
@@ -41,13 +41,13 @@ protected:
 // Tests that the Foo::Bar() method does Abc.
 TEST_F(FooTest, MethodBarDoesAbc)
 {
-//  auto set = new Set();
-//  set->init_values(100, 5);
-//
-//  auto nset = set->split_values(1);
-//  EXPECT_EQ(nset->rows, 1);
-//  delete nset;
-//  delete set;
+  auto set = new Set();
+  set->init_values(100, 5);
+
+  auto nset = set->split_values(1);
+  EXPECT_EQ(nset->rows, 1);
+  delete nset;
+  delete set;
 }
 
 // Tests that Foo does Xyz.
@@ -58,8 +58,8 @@ TEST_F(FooTest, DoesXyz)
 
 } // namespace
 
-//int main(int argc, char **argv)
-//{
-//  ::testing::InitGoogleTest(&argc, argv);
-//  return RUN_ALL_TESTS();
-//}
+int main(int argc, char **argv)
+{
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
