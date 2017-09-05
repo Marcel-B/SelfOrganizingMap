@@ -5,7 +5,6 @@
 #include <limits>
 #include <iomanip>
 #include "inout.h"
-#include "som.hpp"
 #include "types.hpp"
 #include <algorithm>
 #include "help.h"
@@ -59,16 +58,23 @@ namespace com_b_velop
  * @param source Path to the formated csv-File
  * @param out_scaled_data 2D vector<double> with scaled data between 0 and 1
  */
-  void InOut::ImportData(const char *source, com_b_velop::Set *out_set)
-  {
-    string line;
-    ifstream fs;
-    vector<string> lines;
-    fs.open(source);
-    if (fs.is_open())
-      while (getline(fs, line))
-        lines.push_back(line);
-    else throw "Source doesn't exist";
+	void InOut::ImportData(const char *source, com_b_velop::Set *out_set)
+	{
+		string line;
+		ifstream fs;
+		vector<string> lines;
+		std::cout << "Path: " << source << std::endl;
+		fs.open(source);
+		if (fs.is_open())
+			while (getline(fs, line))
+				lines.push_back(line);
+		else
+		{
+			std::cout << "Quelle nicht vorhanden" << std::endl;
+			exit(1);
+			fs.close();
+		}
+			//throw "Source doesn't exist";
     fs.close();
 
     vector<vector<double>> values;

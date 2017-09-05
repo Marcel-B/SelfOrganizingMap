@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "types.hpp"
-#include "set.h"
+#include "../SelfOrganizinMap.Infrastructure/types.hpp"
+#include "../SelfOrganizinMap.Infrastructure/set.h"
 
 using namespace std;
 namespace com_b_velop

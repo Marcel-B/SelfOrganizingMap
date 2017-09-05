@@ -18,22 +18,7 @@
     <None Include="Doxyfile" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="feature.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="help.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="inout.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="set.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="setinfo.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="som.cpp">
@@ -41,25 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="feature.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="help.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="inout.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="set.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="setinfo.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="som.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="types.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

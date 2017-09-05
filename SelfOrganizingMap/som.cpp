@@ -1,5 +1,5 @@
 #include "som.hpp"
-#include "types.hpp"
+#include "../SelfOrganizinMap.Infrastructure/types.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
@@ -8,8 +8,8 @@
 #include <algorithm> // std::random_shuffle
 #include <thread>
 #include <stdlib.h>
-#include "help.h"
-#include "set.h"
+#include "../SelfOrganizinMap.Infrastructure/help.h"
+#include "../SelfOrganizinMap.Infrastructure/set.h"
 
 using namespace std;
 namespace com_b_velop
