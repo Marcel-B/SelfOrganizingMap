@@ -4,10 +4,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "../infrastructure/types.hpp"
-#include "../infrastructure/set.h"
-#include <cstddef>
-
+#include "types.hpp"
+#include "set.h"
 
 using namespace std;
 namespace com_b_velop

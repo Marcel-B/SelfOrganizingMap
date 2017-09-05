@@ -12,3 +12,9 @@ latex/
 cmake-build-debug/
 cmake-build-release/
 .idea/
+Debug/
+Release/
+.vs/
+/cmake-build-debug
+/cmake-build-release
+/cmake-build-release

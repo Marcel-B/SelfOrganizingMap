@@ -41,10 +41,10 @@ protected:
 // Tests that the Foo::Bar() method does Abc.
 TEST_F(FooTest, MethodBarDoesAbc)
 {
-  auto set = new Set();
-  set->init_values(100, 5);
+  auto set = new com_b_velop::Set();
+  set->InitValues(100, 5);
 
-  auto nset = set->split_values(1);
+  auto nset = set->SplitValues(1);
   EXPECT_EQ(nset->rows, 1);
   delete nset;
   delete set;

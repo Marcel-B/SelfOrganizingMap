@@ -1,7 +1,7 @@
-#include "som/som.hpp"
+#include "som.hpp"
 #include "inout.h"
-#include "infrastructure/set.h"
-#include "infrastructure/types.hpp"
+#include "set.h"
+#include "types.hpp"
 #include <iostream>
 #include <thread>
 #include <string>

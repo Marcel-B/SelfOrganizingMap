@@ -5,7 +5,7 @@
 #include <limits>
 #include <iomanip>
 #include "inout.h"
-#include "../som/som.hpp"
+#include "som.hpp"
 #include "types.hpp"
 #include <algorithm>
 #include "help.h"

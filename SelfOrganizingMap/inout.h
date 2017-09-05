@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../som/som.hpp"
+#include "som.hpp"
 #include "feature.h"
 #include "types.hpp"
 #include "set.h"

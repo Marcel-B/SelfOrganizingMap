@@ -6,6 +6,8 @@
 #define SOM_SET_H
 
 #include "setinfo.h"
+#include <vector>
+
 namespace com_b_velop{
   struct Set : public SetInfo
   {
@@ -34,7 +36,7 @@ namespace com_b_velop{
      * Konstruktor, die ankommenden Werte werden direk in Values kopiert
      * @param in_values 2D vector<double> [row, col] mit Daten
      */
-    Set(const vector<vector<double>> &in_values);
+    Set(const std::vector<std::vector<double>> &in_values);
 
     /**
      * Destruktor
@@ -46,7 +48,7 @@ namespace com_b_velop{
      * @param in_values 2D vector<double> [row, col] mit Daten
      * @return Gibt das Set zurück
      */
-    Set *SetSet(const vector<vector<double>> &in_values);
+    Set *SetSet(const std::vector<std::vector<double>> &in_values);
 
     /**
      * Teilt das Set in in_percent und 100  ´- in_percent auf. Dabei werden zufällig Daten entnommen. Das Original-Set
