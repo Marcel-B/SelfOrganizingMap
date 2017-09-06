@@ -3,6 +3,8 @@
 *.exe
 *.csv
 *.som
+*.set
+
 gtest/
 docs/html/
 docs/latex/
@@ -18,3 +20,5 @@ Release/
 /cmake-build-debug
 /cmake-build-release
 /cmake-build-release
+x64/
+x86/

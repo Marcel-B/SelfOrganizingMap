@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SelfOrganizingMap", "SelfOr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SelfOrganizinMap.Infrastructure", "SelfOrganizinMap.Infrastructure\SelfOrganizinMap.Infrastructure.vcxproj", "{76280732-6C96-4A47-99E7-379416AEA9C9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SelfOrganizingMap.Test", "SelfOrganizingMap.Test\SelfOrganizingMap.Test.vcxproj", "{3969DE57-D745-46DD-8FD1-C0A26978F875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{76280732-6C96-4A47-99E7-379416AEA9C9}.Release|x64.Build.0 = Release|x64
 		{76280732-6C96-4A47-99E7-379416AEA9C9}.Release|x86.ActiveCfg = Release|Win32
 		{76280732-6C96-4A47-99E7-379416AEA9C9}.Release|x86.Build.0 = Release|Win32
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Debug|x64.ActiveCfg = Debug|x64
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Debug|x64.Build.0 = Debug|x64
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Debug|x86.ActiveCfg = Debug|Win32
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Debug|x86.Build.0 = Debug|Win32
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Release|x64.ActiveCfg = Release|x64
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Release|x64.Build.0 = Release|x64
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Release|x86.ActiveCfg = Release|Win32
+		{3969DE57-D745-46DD-8FD1-C0A26978F875}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
