@@ -61,10 +61,10 @@ namespace com_b_velop
 	void InOut::ImportData(const char *source, com_b_velop::Set *out_set)
 	{
 		string line;
-		ifstream fs;
+		std::ifstream fs;
 		vector<string> lines;
 		std::cout << "Path: " << source << std::endl;
-		fs.open(source);
+		fs.open(source, std::ios::in);
 		if (fs.is_open())
 			while (getline(fs, line))
 				lines.push_back(line);
