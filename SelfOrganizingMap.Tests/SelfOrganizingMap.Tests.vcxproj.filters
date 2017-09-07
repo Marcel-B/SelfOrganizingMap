@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Doxyfile" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="som.cpp">
+    <ClCompile Include="start.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="inoutttest.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="set.test.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="som.hpp">
+    <ClInclude Include="inouttest.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="set.test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

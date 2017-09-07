@@ -15,16 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Doxyfile" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="som.cpp">
+    <ClCompile Include="SelfOrganizingMapStart.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="som.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
+    <None Include="copy.csv" />
   </ItemGroup>
 </Project>
