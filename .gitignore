@@ -21,3 +21,6 @@ Release/
 /cmake-build-release
 /cmake-build-release
 TestResults/
+packages/
+*.config
+

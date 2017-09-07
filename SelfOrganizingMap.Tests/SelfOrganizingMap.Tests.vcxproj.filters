@@ -18,19 +18,22 @@
     <ClCompile Include="start.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="inoutttest.cpp">
+    <ClCompile Include="set.test.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="set.test.cpp">
+    <ClCompile Include="inout.test.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inouttest.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="set.test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inout.test.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

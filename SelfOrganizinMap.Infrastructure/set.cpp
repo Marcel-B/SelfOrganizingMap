@@ -9,7 +9,7 @@ using namespace std;
 
 namespace com_b_velop
 {
-  Set::Set(const vector<vector<double>> &in_values){
+  Set::Set(const vector<vector<double>> &in_values) : values(nullptr){
     this->SetSet(in_values);
   }
   Set *Set::SetSet(const vector<vector<double>> &in_values){
@@ -80,9 +80,12 @@ namespace com_b_velop
     return this;
   }
   Set *Set::DeallocValues(){
-    for (size_t row = 0; row < rows; ++row)
-      delete[] this->values[row];
-    delete[] this->values;
+		if (this->values != nullptr)
+		{
+			for (size_t row = 0; row < rows; ++row)
+				delete[] this->values[row];
+			delete[] this->values;
+		}
     rows = 0;
     cols = 0;
     values = nullptr;

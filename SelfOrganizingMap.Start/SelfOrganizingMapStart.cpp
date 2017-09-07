@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	std::vector<std::vector<double>> scaled_data;
 	auto set = new com_b_velop::Set();
 
-	com_b_velop::InOut::ImportData("copy.csv", set);
+	com_b_velop::InOut::import_data("copy.csv", set);
 	scaled_data.clear();
 	auto split_set = set->SplitValues(30);
 

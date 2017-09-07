@@ -15,7 +15,7 @@
 using namespace std;
 namespace com_b_velop
 {
-  vector<double> InOut::ScaleValues(const vector<double> &in_column_vector)
+  vector<double> InOut::scale_values(const vector<double> &in_column_vector)
   {
     vector<double> scaled;
     scaled.resize(in_column_vector.size());
@@ -36,7 +36,7 @@ namespace com_b_velop
         scaled[i] = 0.05;
     return scaled;
   }
-  void InOut::SaveSet(const com_b_velop::Set *in_set, const char *destination)
+  void InOut::save_set(const com_b_velop::Set *in_set, const char *destination)
   {
     ofstream of;
     of.open(destination, ios::out);
@@ -58,7 +58,7 @@ namespace com_b_velop
  * @param source Path to the formated csv-File
  * @param out_scaled_data 2D vector<double> with scaled data between 0 and 1
  */
-	void InOut::ImportData(const char *source, com_b_velop::Set *out_set)
+	void InOut::import_data(const char *source, com_b_velop::Set *out_set)
 	{
 		string line;
 		std::ifstream fs;
@@ -80,8 +80,8 @@ namespace com_b_velop
     vector<vector<double>> values;
     vector<string> header;
 
-    ParseLines(lines, values, header);
-    auto features = GetFeatures(values, header);
+    parse_lines(lines, values, header);
+    auto features = get_features(values, header);
     out_set->features = features;
     out_set->features_size = features.size();
     size_t hlen = 0;
@@ -101,7 +101,7 @@ namespace com_b_velop
         tmp_col.push_back(values[row][i]);
       }
       // Spalte skalieren
-      auto column = ScaleValues(tmp_col);
+      auto column = scale_values(tmp_col);
 
       // Skalierten Werte zurückschreiben
       for (size_t row = 0; row < values.size(); ++row)
@@ -111,7 +111,7 @@ namespace com_b_velop
     }
     out_set->SetSet(values);
   }
-  vector<Feature> InOut::GetFeatures(const vector<vector<double>> &in_values, const vector<string> &in_header)
+  vector<Feature> InOut::get_features(const vector<vector<double>> &in_values, const vector<string> &in_header)
   {
     vector<Feature> ret_value;
     for (size_t col = 0; col < in_header.size(); ++col)
@@ -129,7 +129,7 @@ namespace com_b_velop
     }
     return ret_value;
   }
-  void InOut::ParseLines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &out_header)
+  void InOut::parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &out_header)
   {
     string header_row = in_lines[0];
     string current_row;
