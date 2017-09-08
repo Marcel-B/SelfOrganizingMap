@@ -1,9 +1,9 @@
 // "SelfOrganizingMapStart.cpp": Definiert den Einstiegspunkt für die Konsolenanwendung.
 //
-
 #include <som.hpp>
 #include <iostream>
 #include <inout.h>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <iomanip>
@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
 	for (size_t i = 0; i < argc; ++i)
-		cout << argv[i] << endl;
+		std::cout << argv[i] << std::endl;
 	std::string validation_data = "test.set";
 	std::vector<std::vector<double>> scaled_data;
 	auto set = new com_b_velop::Set();
