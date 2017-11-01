@@ -4,8 +4,6 @@
 #include "help.h"
 #include <string>
 
-using namespace std;
-
 // a = unterer Zielwert, b = oberer Zielwert
 double com_b_velop::Help::ScaleValue(double x, double min, double max, double a, double b){
   if (max - min == 0)
@@ -13,10 +11,10 @@ double com_b_velop::Help::ScaleValue(double x, double min, double max, double a,
   return x == 0 ? a : a + (b - a) * (x - min) / (max - min);
 }
 
-tm* ParseTime(const string &in_time_string){
+tm* ParseTime(const std::string &in_time_string){
   time_t rawtime;
-  string timestr = in_time_string;
-  string tmp("");
+	std::string timestr = in_time_string;
+	std::string tmp("");
   struct tm* timeinfo = new tm();
   int n = 0;
   int cnt = 0;

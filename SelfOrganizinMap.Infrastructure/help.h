@@ -4,7 +4,6 @@
 
 #ifndef SOM_HELP_H
 #define SOM_HELP_H
-#include <time.h>
 #include <string>
 
 namespace com_b_velop {

@@ -5,14 +5,12 @@
 #include <fstream>
 #include <random>
 
-using namespace std;
-
 namespace com_b_velop
 {
-  Set::Set(const vector<vector<double>> &in_values) : values(nullptr){
+  Set::Set(const std::vector<std::vector<double>> &in_values) : values(nullptr){
     this->SetSet(in_values);
   }
-  Set *Set::SetSet(const vector<vector<double>> &in_values){
+  Set *Set::SetSet(const std::vector<std::vector<double>> &in_values){
     this->InitValues(in_values.size(), in_values[0].size());
     for (size_t row = 0; row < in_values.size(); ++row)
       for (size_t col = 0; col < in_values[0].size(); ++col)
@@ -21,12 +19,12 @@ namespace com_b_velop
   }
   Set::~Set(){
     this->DeallocValues();
-    cout << "Set (" << this << ") killed" << endl;
+	  std::cout << "Set (" << this << ") killed" << std::endl;
   }
   Set *Set::SaveSet(const char *in_destination){
     std::cout << "Store Set to: " << in_destination << std::endl;
-    ofstream fs;
-    fs.open(in_destination, ios::out | ios::binary);
+	  std::ofstream fs;
+    fs.open(in_destination, std::ios::out | std::ios::binary);
     if (fs.is_open())
     {
       fs.write((char *)&this->rows, sizeof(this->rows));
@@ -45,8 +43,8 @@ namespace com_b_velop
   Set *Set::OpenSet(const char *in_source){
     // std::cout << "Open Set: " << in_source << std::endl;
     auto set = new Set();
-    ifstream fs;
-    fs.open(in_source, ios::in | ios::binary);
+	  std::ifstream fs;
+    fs.open(in_source, std::ios::in | std::ios::binary);
     size_t tmp_rows = 0;
     size_t tmp_cols = 0;
     SetInfo info;
@@ -89,7 +87,7 @@ namespace com_b_velop
     rows = 0;
     cols = 0;
     values = nullptr;
-    cout << "Dealloc Process ready" << endl;
+	  std::cout << "Dealloc Process ready" << std::endl;
     return this;
   }
   Set *Set::SplitValues(const unsigned short &in_percent){
@@ -99,7 +97,7 @@ namespace com_b_velop
     std::mt19937 g(rd());
 
     // Zufällige Indices
-    vector<size_t> indices;
+	  std::vector<size_t> indices;
     for (size_t i = 0; i < this->rows; ++i)
       indices.push_back(i);
     std::shuffle(indices.begin(), indices.end(), g);

@@ -12,15 +12,14 @@
 
 #define SEP ','
 
-using namespace std;
 namespace com_b_velop
 {
-  vector<double> InOut::scale_values(const vector<double> &in_column_vector)
+	std::vector<double> InOut::scale_values(const std::vector<double> &in_column_vector)
   {
-    vector<double> scaled;
+	  std::vector<double> scaled;
     scaled.resize(in_column_vector.size());
-    double max = numeric_limits<double>::lowest();
-    double min = numeric_limits<double>::max();
+    double max = std::numeric_limits<double>::lowest();
+    double min = std::numeric_limits<double>::max();
     double range;
     for (size_t i = 0; i < in_column_vector.size(); ++i)
     {
@@ -38,8 +37,8 @@ namespace com_b_velop
   }
   void InOut::save_set(const com_b_velop::Set *in_set, const char *destination)
   {
-    ofstream of;
-    of.open(destination, ios::out);
+	  std::ofstream of;
+    of.open(destination, std::ios::out);
     if (of.is_open())
     {
       for (size_t row = 0; row < in_set->rows; ++row)
@@ -47,7 +46,7 @@ namespace com_b_velop
         of << in_set->values[row][0];
         for (size_t col = 1; col < in_set->cols; ++col)
           of << SEP << in_set->values[row][col];
-        of << endl;
+        of << std::endl;
       }
       of.close();
     }
@@ -60,9 +59,9 @@ namespace com_b_velop
  */
 	void InOut::import_data(const char *source, com_b_velop::Set *out_set)
 	{
-		string line;
+		std::string line;
 		std::ifstream fs;
-		vector<string> lines;
+		std::vector<std::string> lines;
 		std::cout << "Path: " << source << std::endl;
 		fs.open(source, std::ios::in);
 		if (fs.is_open())
@@ -77,8 +76,8 @@ namespace com_b_velop
 			//throw "Source doesn't exist";
     fs.close();
 
-    vector<vector<double>> values;
-    vector<string> header;
+		std::vector<std::vector<double>> values;
+		std::vector<std::string> header;
 
     parse_lines(lines, values, header);
     auto features = get_features(values, header);
@@ -88,11 +87,11 @@ namespace com_b_velop
     for (size_t i = 0; i < header.size(); ++i)
       hlen = hlen < header[i].size() ? header[i].size() : hlen;
     hlen += 3;
-    cout << setw(hlen) << left << "Name" << right << setw(12) << "min" << setw(12) << "max" << endl;
+		std::cout << std::setw(hlen) << std::left << "Name" << std::right << std::setw(12) << "min" << std::setw(12) << "max" << std::endl;
     for (size_t i = 0; i < features.size(); ++i)
-      cout << features[i].ToString(hlen) << endl;
+	    std::cout << features[i].ToString(hlen) << std::endl;
 
-    vector<double> tmp_col;
+		std::vector<double> tmp_col;
     for (size_t i = 0; i < header.size(); ++i)
     {
       tmp_col.clear();
@@ -111,14 +110,15 @@ namespace com_b_velop
     }
     out_set->SetSet(values);
   }
-  vector<Feature> InOut::get_features(const vector<vector<double>> &in_values, const vector<string> &in_header)
+
+	std::vector<Feature> InOut::get_features(const std::vector<std::vector<double>> &in_values, const std::vector<std::string> &in_header)
   {
-    vector<Feature> ret_value;
+	  std::vector<Feature> ret_value;
     for (size_t col = 0; col < in_header.size(); ++col)
     {
       Feature tmp;
-      tmp.min = numeric_limits<double>::max();
-      tmp.max = numeric_limits<double>::lowest();
+      tmp.min = std::numeric_limits<double>::max();
+      tmp.max = std::numeric_limits<double>::lowest();
       tmp.name = in_header[col];
       for (size_t row = 0; row < in_values.size(); ++row)
       {
@@ -129,11 +129,11 @@ namespace com_b_velop
     }
     return ret_value;
   }
-  void InOut::parse_lines(const vector<string> &in_lines, vector<vector<double>> &out_values, vector<string> &out_header)
+  void InOut::parse_lines(const std::vector<std::string> &in_lines, std::vector<std::vector<double>> &out_values, std::vector<std::string> &out_header)
   {
-    string header_row = in_lines[0];
-    string current_row;
-    string tmp;
+	  std::string header_row = in_lines[0];
+	  std::string current_row;
+	  std::string tmp;
     int idx = 0;
     do
     {
@@ -151,7 +151,7 @@ namespace com_b_velop
 
     for (size_t i = 1; i < in_lines.size(); ++i)
     {
-      vector<double> row;
+	    std::vector<double> row;
       current_row = in_lines[i];
       do
       {

@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 namespace com_b_velop
 {
   struct Point
@@ -17,13 +16,13 @@ namespace com_b_velop
     size_t x;
     size_t y;
     double d;
-    vector<double> out;
-    vector<double> in;
-    vector<double> delta;
+	  std::vector<double> out;
+	  std::vector<double> in;
+	  std::vector<double> delta;
   };
   struct Validation
   {
-    vector<ValidSet> valid_set;
+	  std::vector<ValidSet> valid_set;
     double distance;
   };
 } // namespace com_b_velop

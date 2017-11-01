@@ -5,7 +5,6 @@
 #ifndef SOM_FEATURE_H
 #define SOM_FEATURE_H
 #include <string>
-#include <sstream>
 namespace com_b_velop{
   struct Feature
   {

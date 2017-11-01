@@ -23,4 +23,5 @@ Release/
 TestResults/
 packages/
 *.config
+!App.config
 
