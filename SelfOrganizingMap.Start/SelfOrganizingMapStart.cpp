@@ -1,9 +1,9 @@
 // "SelfOrganizingMapStart.cpp": Definiert den Einstiegspunkt für die Konsolenanwendung.
 //
-
 #include <som.hpp>
 #include <iostream>
 #include <inout.h>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <iomanip>
