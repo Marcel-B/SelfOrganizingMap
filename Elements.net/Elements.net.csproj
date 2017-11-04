@@ -41,10 +41,19 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="MainView\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuView\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OpenFile\OpenFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -53,22 +62,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SideBar\SideBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotations.cs" />
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Commands\OpenSourceCommand.cs" />
+    <Compile Include="Common\BasicFunctions.cs" />
+    <Compile Include="Common\IImportRow.cs" />
     <Compile Include="Common\IViewModelBase.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
     <Compile Include="ExitButton.cs" />
+    <Compile Include="MainView\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuView\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuView\MenuViewModel.cs" />
     <Compile Include="OpenFile\OpenFileView.xaml.cs">
       <DependentUpon>OpenFileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="OpenFile\OpenFileVm.cs" />
+    <Compile Include="Rules\AlphaRule.cs" />
+    <Compile Include="Rules\IterationRule.cs" />
+    <Compile Include="Rules\NeuronRule.cs" />
+    <Compile Include="Rules\RadiusRule.cs" />
     <Compile Include="Settinigs\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settinigs\SettingsVm.cs" />
+    <Compile Include="Settinigs\SettingsViewModel.cs" />
+    <Compile Include="SideBar\SideBarView.xaml.cs">
+      <DependentUpon>SideBarView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

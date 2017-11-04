@@ -4,15 +4,72 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Elements.net.Settinigs"
+             xmlns:rules="clr-namespace:Elements.net.Rules"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <TextBlock Text="Name"/>
-        <TextBox/>
-        <TextBlock Text="Alpha"/>
-        <TextBox/>
-        <TextBlock Text="Neuronen"/>
-        <TextBox />
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             >
+    <UserControl.Resources>
+        <local:SettingsViewModel x:Key="ViewModel"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="4 4 0 0"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="4 4 0 0"></Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <StackPanel DataContext="{StaticResource ViewModel}">
         
+        <TextBlock Text="Name"/>
+        <TextBox>
+            <Binding Path="ProjectName">
+            </Binding>
+        </TextBox>
+        
+        <TextBlock Text="Alpha"/>
+        <TextBox>
+            <Binding Path="Alpha" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <rules:AlphaRule/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        
+        <TextBlock Text="X-Neuronen"/>
+        <TextBox>
+            <Binding Path="XNeurons" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <rules:NeuronRule/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        
+        <TextBlock Text="Y-Neuronen"/>
+        <TextBox>
+            <Binding Path="YNeurons" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <rules:NeuronRule/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+
+        <TextBlock Text="Iterationen"/>
+        <TextBox>
+            <Binding Path="Iterations" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <rules:IterationRule/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        
+        <TextBlock Text="Radius"/>
+        <TextBox>
+            <Binding Path="Radius" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <rules:RadiusRule/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
     </StackPanel>
 </UserControl>

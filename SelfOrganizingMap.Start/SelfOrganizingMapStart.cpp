@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	// Erst mal wegspeichern
 	delete split_set->SaveSet(validation_data.c_str());
 	auto som = new com_b_velop::Som(70, 30, set->cols);
-	som->SetIterationMax(15);
+	som->SetIterationMax(2);
 	som->SetTrainData(set)->StartTraining();
 	auto tmp_set = com_b_velop::Set::OpenSet(validation_data.c_str());
 	tmp_set->features = set->features;

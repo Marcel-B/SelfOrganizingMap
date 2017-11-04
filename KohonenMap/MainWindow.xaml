@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:openFile="clr-namespace:Elements.net.OpenFile;assembly=Elements.net"
+        xmlns:mainView="clr-namespace:Elements.net.MainView;assembly=Elements.net"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="350"
@@ -11,6 +12,6 @@
         TextBoxBase.TextChanged="MainWindow_OnTextChanged"
         >
     <Grid>
-        <openFile:OpenFileView Margin="4"/>
+        <mainView:MainView/>
     </Grid>
 </Window>

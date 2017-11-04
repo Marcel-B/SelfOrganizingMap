@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commands="clr-namespace:Elements.net.Commands"
-             xmlns:local="clr-namespace:Elements.net.OpenFile"
+             xmlns:openFile="clr-namespace:Elements.net.OpenFile"
              mc:Ignorable="d" 
              d:DesignHeight="300" 
              d:DesignWidth="300"
              >
     <UserControl.Resources>
-        <local:OpenFileVm x:Key="ViewModel"/>
+        <openFile:OpenFileVm x:Key="ViewModel"/>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="0 0 4 4"/>
         </Style>
@@ -25,7 +25,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -33,22 +33,17 @@
                     Command="{Binding Path=OpenSource}"
                     Content="Open Source"
                     />
-            <Button Grid.Row="1"
-                    CommandParameter="true"
-                    Command="{Binding Path=ExitApp}"
-                    Content="Exit"
+            <Button Content="OK"
+                    Grid.Row="3"
                     />
         </Grid>
         <Grid TextBoxBase.TextChanged="TextBoxBase_OnTextChanged"  Column="1">
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>-->
             <TextBox Text="{Binding Path=SourceText}"
                      IsReadOnly="True"
                      />
+            <DataGrid ItemsSource="{Binding Path=SourceTable}">
+                
+            </DataGrid>
         </Grid>
 
     </Grid>
