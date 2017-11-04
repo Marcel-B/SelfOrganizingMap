@@ -7,18 +7,24 @@
              xmlns:menuView="clr-namespace:Elements.net.MenuView"
              xmlns:settinigs="clr-namespace:Elements.net.Settinigs"
              xmlns:sideBar="clr-namespace:Elements.net.SideBar"
+             xmlns:sourceView="clr-namespace:Elements.net.SourceView"
+             xmlns:statusBar="clr-namespace:Elements.net.StatusBar"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300"
+             d:DesignWidth="600">
     <DockPanel>
         <menuView:MenuView DockPanel.Dock="Top"/>
-        <sideBar:SideBarView DockPanel.Dock="Left"/>
+        <statusBar:StatusBarView DockPanel.Dock="Bottom"/>
+        <sideBar:SideBarView DockPanel.Dock="Left"
+                             Margin="4 4 2 4"/>
+        
         <Grid>
-            <TabControl>
+            <TabControl Margin="2 4 4 4">
                 <TabItem Header="Einstellungen">
-                    <settinigs:SettingsView></settinigs:SettingsView>
+                    <settinigs:SettingsView/>
                 </TabItem>
                 <TabItem Header="Quelle">
-                    
+                    <sourceView:SourceView/>
                 </TabItem>
             </TabControl>
         </Grid>

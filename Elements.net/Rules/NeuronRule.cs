@@ -14,7 +14,7 @@ namespace Elements.net.Rules
                     return ValidationResult.ValidResult;
                 return new ValidationResult(false, "Zu wenig Neuronen");
             }
-            return ValidationResult.ValidResult;
+            return new ValidationResult(false, "Zu wenig Neuronen");
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Elements.net.Rules
                     return new ValidationResult(false, "False Value");
 
             }
-            return ValidationResult.ValidResult;
+            return new ValidationResult(false, "False Value");
         }
     }
 }

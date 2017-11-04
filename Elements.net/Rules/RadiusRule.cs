@@ -14,7 +14,7 @@ namespace Elements.net.Rules
                     return ValidationResult.ValidResult;
                 return new ValidationResult(false, "Negative Werte sind unzulässig");
             }
-            return ValidationResult.ValidResult;
+            return new ValidationResult(false, "Negative Werte sind unzulässig");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Elements.net.Rules
                     return ValidationResult.ValidResult;
                 return new ValidationResult(false, "Der Wert muss positiv sein");
             }
-            return  ValidationResult.ValidResult;
+            return new ValidationResult(false, "Der Wert muss positiv sein");
         }
     }
 }

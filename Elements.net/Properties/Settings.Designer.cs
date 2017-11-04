@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KohonenMap.Properties {
+namespace Elements.net.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,13 +25,37 @@ namespace KohonenMap.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Hallo")]
-        public string Einstellung {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenFileSource {
             get {
-                return ((string)(this["Einstellung"]));
+                return ((string)(this["OpenFileSource"]));
             }
             set {
-                this["Einstellung"] = value;
+                this["OpenFileSource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public double OpenFileWidth {
+            get {
+                return ((double)(this["OpenFileWidth"]));
+            }
+            set {
+                this["OpenFileWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double OpenFileHeigth {
+            get {
+                return ((double)(this["OpenFileHeigth"]));
+            }
+            set {
+                this["OpenFileHeigth"] = value;
             }
         }
     }

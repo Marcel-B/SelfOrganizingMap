@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.IO;
-using System.Net.Configuration;
-using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows;
 using Elements.net.Commands;
 using Elements.net.Common;
 
@@ -17,6 +13,8 @@ namespace Elements.net.OpenFile
         private string _sourcePath;
         private string _sourceText;
         private ObservableCollection<IImportRow> _sourceTable;
+
+        public event EventHandler<DialogReadyEventArgs> DialogRdy;
 
         public ObservableCollection<IImportRow> SourceTable
         {
@@ -35,25 +33,35 @@ namespace Elements.net.OpenFile
         }
         public bool Fully { get; set; }
         public DelegateCommand OpenSource { get; set; }
+        public DelegateCommand OkCommand { get; set; }
 
 
         public OpenFileVm()
         {
             Fully = true;
             OpenSource = new DelegateCommand(OpenFile);
+            OkCommand = new DelegateCommand(Ok);
         }
-
-        public void Exit()
+        public void Ok()
         {
-            Environment.Exit(0);
+            DialogRdy?.Invoke(this, new DialogReadyEventArgs(SourcePath, true));
         }
-
         public async void OpenFile()
         {
             var ofd = new Microsoft.Win32.OpenFileDialog();
+            var path = Properties.Settings.Default.OpenFileSource;
+
+            if (Directory.Exists(path))
+                ofd.InitialDirectory = path;
+
             var result = (bool)ofd.ShowDialog();
             if (!result) return;
             SourcePath = ofd.FileName;
+
+            Properties.Settings.Default.OpenFileSource = Path.GetDirectoryName(SourcePath);
+            Properties.Settings.Default.Save();
+
+
             var fi = new FileInfo(SourcePath);
             if (SourceTable == null) SourceTable = new ObservableCollection<IImportRow>();
             if (fi.Exists)
@@ -63,7 +71,7 @@ namespace Elements.net.OpenFile
                     while (!fr.EndOfStream)
                     {
                         var line = await fr.ReadLineAsync();
-                        var ff = new ImportRow() {Value = line};
+                        var ff = new ImportRow { Value = line };
                         SourceTable.Add(ff);
                     }
                 }
