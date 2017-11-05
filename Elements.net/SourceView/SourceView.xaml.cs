@@ -1,18 +1,16 @@
 ﻿using System.Windows.Controls;
 
-namespace Elements.net.SourceView
+namespace com_b_velop.SourceView
 {
     /// <summary>
     /// Interaktionslogik für SourceView.xaml
     /// </summary>
     public partial class SourceView : UserControl
     {
-        public SourceViewModel ViewModel { get; set; }
-
         public SourceView()
         {
             InitializeComponent();
-            this.DataContext = ViewModel;
+            this.DataContext = new SourceViewModel();
         }
     }
 }

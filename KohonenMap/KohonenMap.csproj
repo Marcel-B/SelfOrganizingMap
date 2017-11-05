@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{101FFD42-B0BE-4952-8848-C27ED0C533F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KohonenMap</RootNamespace>
+    <RootNamespace>com_b_velop</RootNamespace>
     <AssemblyName>KohonenMap</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

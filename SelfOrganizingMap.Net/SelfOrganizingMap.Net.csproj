@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SelfOrganizingMap.Interfaces\SelfOrganizingMap.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="SelfOrganizingMap.Api.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

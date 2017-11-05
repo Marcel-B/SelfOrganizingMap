@@ -1,7 +1,7 @@
-﻿using Elements.net.Commands;
-using Elements.net.Common;
+﻿using com_b_velop.Commands;
+using com_b_velop.Common;
 
-namespace Elements.net.MenuView
+namespace com_b_velop.MenuView
 {
     public class MenuViewModel : ViewModelBase
     {

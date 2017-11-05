@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace KohonenMap
+namespace com_b_velop
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml

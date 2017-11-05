@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="Elements.net.Settinigs.SettingsView"
+﻿<UserControl x:Class="com_b_velop.Settings.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Elements.net.Settinigs"
-             xmlns:rules="clr-namespace:Elements.net.Rules"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:rules="clr-namespace:com_b_velop.Rules"
+             xmlns:settings="clr-namespace:com_b_velop.Settings"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="300"
              >
     <UserControl.Resources>
-        <local:SettingsViewModel x:Key="ViewModel"/>
+        <settings:SettingsViewModel x:Key="ViewModel"/>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="4 4 0 0"></Setter>
         </Style>

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using Elements.net.OpenFile;
+using com_b_velop.Common;
+using com_b_velop.OpenFile;
 
-namespace Elements.net.Commands
+namespace com_b_velop.Commands
 {
     public class OpenSourceCommand : ICommand
     {
@@ -24,14 +25,10 @@ namespace Elements.net.Commands
                 Height = height
             };
 
-            var result = (bool)win.ShowDialog();
-
+            win.ShowDialog();
             Properties.Settings.Default.OpenFileHeigth = win.ActualHeight;
             Properties.Settings.Default.OpenFileWidth = win.ActualWidth;
             Properties.Settings.Default.Save();
-
-            if (!result) return;
-            var source = win.SourcePath;
         }
 
         public event EventHandler CanExecuteChanged;

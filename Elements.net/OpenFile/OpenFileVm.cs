@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.IO;
-using System.Windows;
-using Elements.net.Commands;
-using Elements.net.Common;
+using com_b_velop.Commands;
+using com_b_velop.Common;
 
-namespace Elements.net.OpenFile
+namespace com_b_velop.OpenFile
 {
     public class OpenFileVm : ViewModelBase
     {
         private string _sourcePath;
         private string _sourceText;
-        private ObservableCollection<IImportRow> _sourceTable;
+        private bool? _hasHeader;
+        private char _split;
 
+        private ObservableCollection<IImportRow> _sourceTable;
         public event EventHandler<DialogReadyEventArgs> DialogRdy;
 
         public ObservableCollection<IImportRow> SourceTable
@@ -31,6 +31,17 @@ namespace Elements.net.OpenFile
             get => _sourceText;
             set { _sourceText = value; OnPropertyChanged(); }
         }
+        public bool? HasHeader
+        {
+            get => _hasHeader;
+            set { _hasHeader = value; OnPropertyChanged(); }
+        }
+        public char Split
+        {
+            get => _split;
+            set { _split = value; OnPropertyChanged(); }
+        }
+
         public bool Fully { get; set; }
         public DelegateCommand OpenSource { get; set; }
         public DelegateCommand OkCommand { get; set; }
@@ -38,13 +49,14 @@ namespace Elements.net.OpenFile
 
         public OpenFileVm()
         {
+            HasHeader = false;
             Fully = true;
             OpenSource = new DelegateCommand(OpenFile);
             OkCommand = new DelegateCommand(Ok);
         }
         public void Ok()
         {
-            DialogRdy?.Invoke(this, new DialogReadyEventArgs(SourcePath, true));
+            DialogRdy?.Invoke(this, new DialogReadyEventArgs(SourcePath, Split, (bool)HasHeader, true));
         }
         public async void OpenFile()
         {

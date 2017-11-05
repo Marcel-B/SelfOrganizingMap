@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace Elements.net.Rules
+namespace com_b_velop.Rules
 {
     public class NeuronRule : ValidationRule
     {
