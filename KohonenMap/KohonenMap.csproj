@@ -118,6 +118,14 @@
       <Project>{56b97f09-579b-4ed4-a2a5-de917017f20f}</Project>
       <Name>Elements.net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SelfOrganizingMap.Interfaces\SelfOrganizingMap.Interfaces.csproj">
+      <Project>{4965ed96-38ad-48e9-9ad7-a04e4d348bd1}</Project>
+      <Name>SelfOrganizingMap.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SelfOrganizingMap.Net\SelfOrganizingMap.Net.csproj">
+      <Project>{96b833cf-4df3-4ae8-bb67-6ec8cffef69b}</Project>
+      <Name>SelfOrganizingMap.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
