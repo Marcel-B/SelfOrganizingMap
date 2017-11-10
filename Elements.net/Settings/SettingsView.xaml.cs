@@ -7,9 +7,10 @@ namespace com_b_velop.Settings
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        public SettingsView()
+        public SettingsView(ISettingsViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

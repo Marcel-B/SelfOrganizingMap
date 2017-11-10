@@ -8,5 +8,7 @@
         int XNeurons { get; set; }
         int YNeurons { get; set; }
         int Iterations { get; set; }
+        void DataUpdated();
+
     }
 }

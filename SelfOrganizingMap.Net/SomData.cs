@@ -10,5 +10,9 @@ namespace SelfOrganizingMap.Net
         public int XNeurons { get; set; }
         public int YNeurons { get; set; }
         public int Iterations { get; set; }
+        public void DataUpdated()
+        {
+            
+        }
     }
 }

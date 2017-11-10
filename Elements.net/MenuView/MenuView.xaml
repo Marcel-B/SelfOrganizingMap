@@ -5,15 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:menuView="clr-namespace:com_b_velop.MenuView"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <menuView:MenuViewModel x:Key="ViewModel"/>
-        <!--<Style TargetType="Button">
-            <Setter Property="Margin" Value="0 0 4 4"/>
-        </Style>-->
-    </UserControl.Resources>
-
-        <Menu DataContext="{StaticResource ViewModel}">
+             d:DesignHeight="24" d:DesignWidth="300">
+        <Menu>
         <MenuItem Header="_Datei">
             <MenuItem Header="_Laden"
                       CommandParameter="true"

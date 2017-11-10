@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using com_b_velop.Commands;
 using com_b_velop.Common;
+using com_b_velop.Events;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
 
 namespace com_b_velop.OpenFile
 {
-    public class OpenFileVm : ViewModelBase
+    public class OpenFileViewModel : BindableBase, IOpenFileViewModel
     {
         private string _sourcePath;
         private string _sourceText;
@@ -14,32 +17,33 @@ namespace com_b_velop.OpenFile
         private char _split;
 
         private ObservableCollection<IImportRow> _sourceTable;
+        private readonly IEventAggregator _eventAggregator;
         public event EventHandler<DialogReadyEventArgs> DialogRdy;
 
         public ObservableCollection<IImportRow> SourceTable
         {
             get => _sourceTable;
-            set { _sourceTable = value; OnPropertyChanged(); }
+            set => SetProperty(ref _sourceTable, value);
         }
         public string SourcePath
         {
             get => _sourcePath;
-            set { _sourcePath = value; OnPropertyChanged(); }
+            set => SetProperty(ref _sourcePath, value);
         }
         public string SourceText
         {
             get => _sourceText;
-            set { _sourceText = value; OnPropertyChanged(); }
+            set => SetProperty(ref _sourceText, value);
         }
         public bool? HasHeader
         {
             get => _hasHeader;
-            set { _hasHeader = value; OnPropertyChanged(); }
+            set => SetProperty(ref _hasHeader, value);
         }
         public char Split
         {
             get => _split;
-            set { _split = value; OnPropertyChanged(); }
+            set => SetProperty(ref _split, value);
         }
 
         public bool Fully { get; set; }
@@ -47,8 +51,9 @@ namespace com_b_velop.OpenFile
         public DelegateCommand OkCommand { get; set; }
 
 
-        public OpenFileVm()
+        public OpenFileViewModel(IEventAggregator eventAgregator)
         {
+            _eventAggregator = eventAgregator;
             HasHeader = false;
             Fully = true;
             OpenSource = new DelegateCommand(OpenFile);
@@ -56,7 +61,8 @@ namespace com_b_velop.OpenFile
         }
         public void Ok()
         {
-            DialogRdy?.Invoke(this, new DialogReadyEventArgs(SourcePath, Split, (bool)HasHeader, true));
+            var e = new DialogReadyEventArgs(SourcePath, Split, (bool)HasHeader, true);
+            _eventAggregator.GetEvent<OpenFileReadyEvent>().Publish(e);
         }
         public async void OpenFile()
         {

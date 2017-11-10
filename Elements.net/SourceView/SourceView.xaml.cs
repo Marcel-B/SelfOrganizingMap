@@ -7,10 +7,10 @@ namespace com_b_velop.SourceView
     /// </summary>
     public partial class SourceView : UserControl
     {
-        public SourceView()
+        public SourceView(ISourceViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = new SourceViewModel();
+            this.DataContext = viewModel;
         }
     }
 }

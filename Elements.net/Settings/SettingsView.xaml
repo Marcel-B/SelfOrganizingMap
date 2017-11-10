@@ -10,7 +10,6 @@
              d:DesignWidth="300"
              >
     <UserControl.Resources>
-        <settings:SettingsViewModel x:Key="ViewModel"/>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="4 4 0 0"></Setter>
         </Style>
@@ -19,8 +18,7 @@
         </Style>
     </UserControl.Resources>
     
-    <StackPanel DataContext="{StaticResource ViewModel}">
-        
+    <StackPanel>
         <TextBlock Text="Name"/>
         <TextBox>
             <Binding Path="ProjectName">

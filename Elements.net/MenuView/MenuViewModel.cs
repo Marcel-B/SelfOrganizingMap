@@ -1,18 +1,27 @@
 ﻿using com_b_velop.Commands;
-using com_b_velop.Common;
+using com_b_velop.Events;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
 
 namespace com_b_velop.MenuView
 {
-    public class MenuViewModel : ViewModelBase
+    public class MenuViewModel : BindableBase, IMenuViewModel
     {
         public DelegateCommand ExitApp { get; set; }
-        public OpenSourceCommand OpenSource { get; set; }
+        public DelegateCommand OpenSource { get; set; }
 
-
-        public MenuViewModel()
+        public MenuViewModel(IEventAggregator eventAggregator)
         {
-            ExitApp = new DelegateCommand(BasicFunctions.Exit);
-            OpenSource = new OpenSourceCommand();
+            ExitApp = new DelegateCommand(() =>
+            {
+                eventAggregator.GetEvent<ExitEvent>().Publish(this);
+            });
+
+            OpenSource = new DelegateCommand(() =>
+            {
+                eventAggregator.GetEvent<OpenSourceEvent>().Publish(this);
+            });
         }
     }
 }

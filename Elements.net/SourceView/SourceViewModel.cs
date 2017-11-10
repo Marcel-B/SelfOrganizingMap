@@ -4,42 +4,48 @@ using System.IO;
 using System.Linq;
 using com_b_velop.Common;
 using com_b_velop.Enums;
+using com_b_velop.Events;
+using Prism.Events;
+using Prism.Mvvm;
 
 namespace com_b_velop.SourceView
 {
-    public class SourceViewModel : ViewModelBase, IObserver
+    public class SourceViewModel : BindableBase, ISourceViewModel
     {
-        public SourceViewModel()
+        public SourceViewModel(IEventAggregator eventAggregator)
         {
-            var appState = AppState.GetInstance();
-            appState.Register(this);
+            eventAggregator.GetEvent<OpenFileReadyEvent>().Subscribe(OnOpenFileReadyEvent);
         }
-        ~SourceViewModel()
-        {
-            var appState = AppState.GetInstance();
-            appState.Remove(this);
-        }
+
         private DataTable _table;
         private string _input;
+
         public DataTable Table
         {
             get => _table;
-            set { _table = value; OnPropertyChanged(); }
+            set => SetProperty(ref _table, value);
         }
         public string Input
         {
             get => _input;
-            set { _input = value; OnPropertyChanged(); }
+            set => SetProperty(ref _input, value);
         }
 
-        public async void Update(ObserverType obj)
+        private async void OnOpenFileReadyEvent(DialogReadyEventArgs obj)
         {
-            if (obj == ObserverType.SourceInfo)
+            if (obj.Result)
             {
-                    var info = SomModel.GetSourceInfo();
-                    Input = (info.SourcePath);
-                    Table = await GetTable.GetDataTable(Input, info.HasHeader, info.SplitChar);
+                var appState = AppState.GetInstance();
+
+                ISourceInfo sourceInfo = SomModel.GetInstance();
+                sourceInfo.SourcePath = obj.Filepath;
+                sourceInfo.SplitChar = obj.Split;
+                sourceInfo.HasHeader = obj.HasHeader;
+
+                appState.SourceInfo = sourceInfo;
+                appState.Message(ObserverType.SourceInfo);
             }
+            Table = await GetTable.GetDataTable(obj.Filepath, obj.HasHeader, obj.Split);
         }
     }
 }

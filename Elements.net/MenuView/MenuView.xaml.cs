@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Prism.Events;
 
 namespace com_b_velop.MenuView
 {
@@ -7,9 +8,11 @@ namespace com_b_velop.MenuView
     /// </summary>
     public partial class MenuView : UserControl
     {
-        public MenuView()
+
+        public MenuView(IMenuViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

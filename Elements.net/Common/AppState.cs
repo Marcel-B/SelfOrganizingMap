@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using com_b_velop.Enums;
+using SelfOrganizingMap.Net;
 
 namespace com_b_velop.Common
 {
@@ -27,6 +28,7 @@ namespace com_b_velop.Common
         public void StartIteration()
         {
             SomSettings = SomModel.GetInstance();
+            SomCore.StartIteration(SomSettings);
         }
 
         public void Register(IObserver observer)

@@ -1,9 +1,8 @@
-﻿using com_b_velop.Common;
-using Newtonsoft.Json;
+﻿using Prism.Mvvm;
 
 namespace com_b_velop.Settings
 {
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : BindableBase, ISettingsViewModel
     {
         private string _projectName;
         private string _alpha;
@@ -15,69 +14,36 @@ namespace com_b_velop.Settings
         public string ProjectName
         {
             get => _projectName;
-            set
-            {
-                _projectName = value; OnPropertyChanged();
-                _model.SomName = value;
-            }
+            set => SetProperty(ref _projectName, value);
         }
         public string Alpha
         {
             get => _alpha;
-            set
-            {
-                _alpha = value; OnPropertyChanged();
-                _model.Alpha = double.Parse(value);
-            }
+            set => SetProperty(ref _alpha, value);
         }
         public string XNeurons
         {
             get => _xNeurons;
-            set
-            {
-                _xNeurons = value; OnPropertyChanged();
-                _model.XNeurons = int.Parse(value);
-            }
+            set => SetProperty(ref _xNeurons, value);
         }
         public string YNeurons
         {
             get => _yNeurons;
-            set
-            {
-                _yNeurons = value; OnPropertyChanged();
-                _model.YNeurons = int.Parse(value);
-            }
+            set  => SetProperty(ref _yNeurons, value);
         }
         public string Iterations
         {
             get => _iterations;
-            set
-            {
-                _iterations = value; OnPropertyChanged();
-                _model.Iterations = int.Parse(value);
-            }
+            set => SetProperty(ref _iterations, value);
         }
         public string Radius
         {
             get => _radius;
-            set
-            {
-                _radius = value; OnPropertyChanged();
-                _model.Radius = int.Parse(value);
-            }
+            set => SetProperty(ref _radius, value);
         }
-
-        public void Serialize()
-        {
-            string json = JsonConvert.SerializeObject(this);
-        }
-
-        private SomModel _model;
-
         public SettingsViewModel()
         {
-            _model = SomModel.GetInstance();
-            Alpha = "0,7";
+            _alpha = "0,7";
             XNeurons = "50";
             YNeurons = "70";
             Iterations = "20";
