@@ -8,10 +8,7 @@
              d:DesignHeight="300" 
              d:DesignWidth="300"
              Width="120">
-    <UserControl.Resources>
-        <sideBar:SideBarViewModel x:Key="ViewModel"/>
-    </UserControl.Resources>
-    <Grid DataContext="{StaticResource ViewModel}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,6 +16,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-            <Button Command="{Binding Path=StartIterationCommand}">Start</Button>
+        <Button Command="{Binding Path=StartIteration}">Start</Button>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace com_b_velop.SideBar
 {
@@ -7,9 +8,10 @@ namespace com_b_velop.SideBar
     /// </summary>
     public partial class SideBarView : UserControl
     {
-        public SideBarView()
+        public SideBarView(ISideBarViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

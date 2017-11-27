@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 using com_b_velop.Common;
-using com_b_velop.Enums;
 using com_b_velop.Events;
 using Prism.Events;
 
 namespace com_b_velop.OpenFile
 {
-    public partial class OpenFileView : Window
+    public partial class OpenFileView : UserControl
     {
-        public OpenFileView(IOpenFileViewModel viewModel, IEventAggregator eventAggregator)
+        public OpenFileView(IOpenFileViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
-            eventAggregator.GetEvent<OpenFileReadyEvent>().Subscribe(OnOpenFileReady);
         }
 
-        private void OnOpenFileReady(DialogReadyEventArgs e)
-        {
-            DialogResult = e.Result;
-        }
         private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             Console.WriteLine("Text has Changed");

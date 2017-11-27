@@ -13,8 +13,22 @@ namespace SelfOrganizingMap.Net.UnitTests
         {
             var db = new ProjectContext();
             var pr = new Project();
+
             pr.Name = "Hallo";
-            pr.CreateDate = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            pr.CreateDate = DateTime.Now.ToOADate();
+            pr.LastEdit = DateTime.Now.ToOADate();
+            pr.Comment = "a little comment";
+            
+
+            var map = new Map
+            {
+                Name = "First try",
+                LastEdit = DateTime.Now.ToOADate(),
+                CreationDate = DateTime.Now.ToOADate(),
+                Comment = "Gnihii"
+            };
+
+            pr.Maps.Add(map);
             db.Projects.Add(pr);
             db.SaveChanges();
         }

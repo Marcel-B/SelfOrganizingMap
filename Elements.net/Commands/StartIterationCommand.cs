@@ -15,8 +15,6 @@ namespace com_b_velop.Commands
         public void Execute(object parameter)
         {
             //MessageBox.Show("Et jeht loss");
-            var app = AppState.GetInstance();
-            app.StartIteration();
             //app.StartIteration(SomModel.GetInstance());
         }
 

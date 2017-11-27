@@ -1,9 +1,9 @@
-﻿namespace com_b_velop
+﻿namespace com_b_velop.Common
 {
     public interface ISourceInfo
     {
-        string SourcePath { get; set; }
         bool HasHeader { get; set; }
+        string SourcePath { get; set; }
         char SplitChar { get; set; }
     }
 }

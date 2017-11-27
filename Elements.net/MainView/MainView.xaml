@@ -14,10 +14,6 @@
              d:DesignWidth="600">
     <DockPanel>
         <ContentControl regions:RegionManager.RegionName="MenuRegion" DockPanel.Dock="Top"/>
-        <statusBar:StatusBarView DockPanel.Dock="Bottom"/>
-        <sideBar:SideBarView DockPanel.Dock="Left"
-                             Margin="4 4 2 4"/>
-
         <TabControl Margin="2 4 4 4">
             <TabItem Header="Einstellungen">
                 <ContentControl regions:RegionManager.RegionName="Settings"/>

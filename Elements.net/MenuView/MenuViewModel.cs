@@ -11,7 +11,7 @@ namespace com_b_velop.MenuView
         public DelegateCommand ExitApp { get; set; }
         public DelegateCommand OpenSource { get; set; }
 
-        public MenuViewModel(IEventAggregator eventAggregator)
+        public MenuViewModel(EventAggregator eventAggregator)
         {
             ExitApp = new DelegateCommand(() =>
             {

@@ -15,14 +15,10 @@ namespace com_b_velop.StatusBar
 
         public StatusBarViewModel()
         {
-            var state = AppState.GetInstance();
-            state.Register(this);
         }
 
         ~StatusBarViewModel()
         {
-            var state = AppState.GetInstance();
-            state.Remove(this);
         }
         public void Update(ObserverType obj)
         {

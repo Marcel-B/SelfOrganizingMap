@@ -35,11 +35,6 @@ namespace com_b_velop.Common
                     table.Rows.Add(cells);
                 }
             }
-            var state = AppState.GetInstance();
-            var trainInfo = SomModel.GetTrainDataInfo();
-            trainInfo.Features = table.Columns.Count;
-            trainInfo.TrainDataSize = table.Rows.Count;
-            state.Message(ObserverType.TrainDataInfo);
             return table;
         }
     }

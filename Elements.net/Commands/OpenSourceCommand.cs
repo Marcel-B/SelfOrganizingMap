@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using com_b_velop.OpenFile;
 using Microsoft.Practices.ServiceLocation;
+using OpenFileView = com_b_velop.OpenFile.OpenFileView;
 
 namespace com_b_velop.Commands
 {
@@ -22,10 +23,6 @@ namespace com_b_velop.Commands
             var height = Properties.Settings.Default.OpenFileHeigth;
             var win = _serviceLocater.GetInstance<OpenFileView>();
 
-            win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            win.Width = width;
-            win.Height = height;
-            win.ShowDialog();
 
             Properties.Settings.Default.OpenFileHeigth = win.ActualHeight;
             Properties.Settings.Default.OpenFileWidth = win.ActualWidth;

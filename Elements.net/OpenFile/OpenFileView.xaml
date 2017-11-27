@@ -1,4 +1,4 @@
-﻿<Window x:Class="com_b_velop.OpenFile.OpenFileView"
+﻿<UserControl x:Class="com_b_velop.OpenFile.OpenFileView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,47 +7,51 @@
              d:DesignHeight="300" 
              d:DesignWidth="300"
              >
-    <Window.Resources>
+    <UserControl.Resources>
         <Style x:Key="marg" TargetType="Control">
-            <Setter Property="Margin" Value="0 0 4 4"/>
+            <Setter Property="Margin" Value="0 4 4 4"/>
         </Style>
-    </Window.Resources>
+    </UserControl.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <Button CommandParameter="Wohooo"
-                    Command="{Binding Path=OpenSource}"
-                    Content="Open Source"
-                    Style="{DynamicResource marg}"
-                    />
-            <ToggleButton Grid.Row="1"
-                    Style="{DynamicResource marg}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    CommandParameter="Wohooo"
+                        Command="{Binding Path=OpenSource}"
+                        Content="Open Source"
+                        Style="{DynamicResource marg}"
+                        />
+            <ToggleButton Grid.Column="1"
+                          Style="{DynamicResource marg}"
                           IsChecked="{Binding Path=HasHeader}"
                           >Header</ToggleButton>
-            <TextBox Grid.Row="2"
-                    Style="{DynamicResource marg}"
+            <TextBox Grid.Column="2"
+                     Style="{DynamicResource marg}"
                      Text="{Binding Path=Split}"
-                     ></TextBox>
+                     />
             <Button Content="OK"
                     Style="{DynamicResource marg}"
-                    Grid.Row="4"
+                    Grid.Column="4"
+                    Margin="0 4 0 4"
                     CommandParameter="true"
                     Command="{Binding Path=OkCommand}"
                     />
         </Grid>
-        <Grid TextBoxBase.TextChanged="TextBoxBase_OnTextChanged"  Column="1">
+
+        <Grid Grid.Row="1"
+              TextBoxBase.TextChanged="TextBoxBase_OnTextChanged"  Column="1">
             <TextBox Text="{Binding Path=SourceText}"
                      IsReadOnly="True"
                      />
@@ -57,4 +61,4 @@
         </Grid>
 
     </Grid>
-</Window>
+</UserControl>
